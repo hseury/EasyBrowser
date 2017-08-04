@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ClipDrawable;
 import android.net.http.SslError;
 import android.os.Handler;
@@ -35,6 +36,8 @@ public class MainActivity extends Activity {
   private LinearLayout contentContainer;
   Handler handler = new Handler();
   private ClipDrawable mProgressDrawable;
+
+  private boolean mLoading;
 
   public static String currentUrl = null;
 
@@ -158,8 +161,13 @@ public class MainActivity extends Activity {
 
     mReloadOrStopButton = (ImageButton) findViewById(R.id.stop_reload_button);
     mReloadOrStopButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
+      @Override public void onClick(View v) {
+        if (mLoading) {
+          mWebView.stopLoading();
+        } else {
+          mWebView.reload();
+        }
+        changeStopOrRefresh();
       }
     });
 
@@ -179,10 +187,10 @@ public class MainActivity extends Activity {
     return super.onKeyUp(keyCode, event);
   }
 
-  public void setKeyboardVisibilityForUrl(boolean visibile){
+  public void setKeyboardVisibilityForUrl(boolean visible){
     InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(
         Context.INPUT_METHOD_SERVICE);
-    if(visibile){
+    if(visible){
       imm.showSoftInput(mUrlTextView,InputMethodManager.SHOW_IMPLICIT);
     }else{
       imm.hideSoftInputFromWindow(mUrlTextView.getWindowToken(),0);
@@ -197,13 +205,8 @@ public class MainActivity extends Activity {
     if(mWebView != null)
       contentContainer.removeView(mWebView);
 
-    //mWebView.onConfigurationChanged(newConfig);
     setContentView(R.layout.activity_main);
     initUIAndSettings();
-
-    //        contentContainer = (LinearLayout)findViewById(R.id.content_container);
-    //        contentContainer.addView(mWebView);
-
   }
 
   @Override
@@ -261,6 +264,15 @@ public class MainActivity extends Activity {
 
         @Override public void onPageFinished(WebView view, String url) {
           super.onPageFinished(view, url);
+          mLoading = false;
+          enableUIControl();
+          changeStopOrRefresh();
+        }
+
+        @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
+          super.onPageStarted(view, url, favicon);
+          mLoading = true;
+          changeStopOrRefresh();
         }
       });
 
@@ -273,10 +285,11 @@ public class MainActivity extends Activity {
             currentUrl = mUrlTextView.getText().toString();
           }
 
-          if (newProgress > 60)
+          if (newProgress == 100) {
             mProgressDrawable.setLevel(0);
-          else
+          }else{
             mProgressDrawable.setLevel(newProgress * 100);
+          }
         }
 
         @Override
@@ -346,6 +359,14 @@ public class MainActivity extends Activity {
       mNextButton.setEnabled(true);
     } else {
       mNextButton.setEnabled(false);
+    }
+  }
+
+  private void changeStopOrRefresh() {
+    if (mLoading) {
+      mReloadOrStopButton.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+    } else {
+      mReloadOrStopButton.setImageResource(R.drawable.ic_refresh);
     }
   }
 }
