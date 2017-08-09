@@ -26,3 +26,5 @@ captures/
 *.iml
 # Keystore files
 *.jks
+
+.idea/
