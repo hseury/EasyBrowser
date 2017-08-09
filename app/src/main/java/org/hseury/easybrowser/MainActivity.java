@@ -15,11 +15,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -40,6 +41,7 @@ public class MainActivity extends Activity {
   private boolean mLoading;
 
   public static String currentUrl = null;
+  private boolean mIsLoadResouce = false;
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
@@ -92,45 +94,6 @@ public class MainActivity extends Activity {
         return false;
       }
     });
-    /***********
-     *  mUrlTextView = (EditText) findViewById(R.id.url);
-     mUrlTextView.setOnEditorActionListener(new OnEditorActionListener() {
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-    if ((actionId != EditorInfo.IME_ACTION_GO) && (event == null
-    || event.getKeyCode() != KeyEvent.KEYCODE_ENTER
-    || event.getAction() != KeyEvent.ACTION_DOWN)) {
-    return false;
-    }
-    loadUrl(mUrlTextView.getText().toString());
-    setKeyboardVisibilityForUrl(false);
-    mContentViewCore.getContainerView().requestFocus();
-    return true;
-    }
-    });
-     mUrlTextView.setOnFocusChangeListener(new OnFocusChangeListener() {
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-    setKeyboardVisibilityForUrl(hasFocus);
-    mNextButton.setVisibility(hasFocus ? GONE : VISIBLE);
-    mPrevButton.setVisibility(hasFocus ? GONE : VISIBLE);
-    mStopReloadButton.setVisibility(hasFocus ? GONE : VISIBLE);
-    if (!hasFocus) {
-    mUrlTextView.setText(mWebContents.getUrl());
-    }
-    }
-    });
-     mUrlTextView.setOnKeyListener(new OnKeyListener() {
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_BACK) {
-    mContentViewCore.getContainerView().requestFocus();
-    return true;
-    }
-    return false;
-    }
-    });
-     */
   }
 
   private void initializeNavigationButtons() {
@@ -252,11 +215,6 @@ public class MainActivity extends Activity {
       mWebView.requestFocus();
 
       mWebView.setWebViewClient(new WebViewClient() {
-        @Override
-        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-          handler.proceed();
-        }
-
         @Override public void onReceivedLoginRequest(WebView view, String realm, String account,
             String args) {
           super.onReceivedLoginRequest(view, realm, account, args);
@@ -274,6 +232,12 @@ public class MainActivity extends Activity {
           mLoading = true;
           changeStopOrRefresh();
         }
+
+        @Override public void onLoadResource(WebView webView, String s) {
+          super.onLoadResource(webView, s);
+          mIsLoadResouce = true;
+        }
+
       });
 
       mWebView.setWebChromeClient(new WebChromeClient() {
@@ -286,10 +250,14 @@ public class MainActivity extends Activity {
           }
 
           if (newProgress == 100) {
+            mIsLoadResouce = true;
             mProgressDrawable.setLevel(0);
-          }else{
+          } else if (!mIsLoadResouce) {
             mProgressDrawable.setLevel(newProgress * 100);
+          } else {
+            mProgressDrawable.setLevel(0);
           }
+
         }
 
         @Override
