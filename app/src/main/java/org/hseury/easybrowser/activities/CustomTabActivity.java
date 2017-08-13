@@ -1,4 +1,4 @@
-package org.hseury.easybrowser;
+package org.hseury.easybrowser.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,8 +25,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import org.hseury.easybrowser.R;
 
-public class MainActivity extends Activity {
+public class CustomTabActivity extends Activity {
 
   public static final String TAG = "browser41";
   private WebView mWebView;
@@ -46,9 +47,10 @@ public class MainActivity extends Activity {
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.activity_main);
     initUIAndSettings();
-    currentUrl = "http://m.2345.com";
+    currentUrl = "http://hseury.tk";
     mWebView.loadUrl(currentUrl);
   }
 

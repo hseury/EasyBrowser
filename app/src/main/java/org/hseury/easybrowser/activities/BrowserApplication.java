@@ -1,4 +1,4 @@
-package org.hseury.easybrowser;
+package org.hseury.easybrowser.activities;
 
 import android.app.Application;
 import com.tencent.smtt.sdk.QbSdk;
