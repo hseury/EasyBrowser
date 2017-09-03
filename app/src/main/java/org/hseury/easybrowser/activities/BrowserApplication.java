@@ -10,6 +10,7 @@ import com.tencent.smtt.sdk.QbSdk;
 public class BrowserApplication extends Application {
   @Override public void onCreate() {
     super.onCreate();
+    //init x5 WebView
     QbSdk.initX5Environment(this,null);
   }
 }

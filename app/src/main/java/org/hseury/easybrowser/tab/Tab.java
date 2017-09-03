@@ -3,6 +3,7 @@ package org.hseury.easybrowser.tab;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -88,12 +89,11 @@ public class Tab {
     public void onReceivedTitle(WebView view, String title) {
       super.onReceivedTitle(view, title);
     }
-
   };
 
   public Tab(Context context) {
     mContext = context;
-    setWebView(new WebView(mContext));
+    setWebView(new WebViewFactory(context).createWebView());
   }
 
   public void setWebView(WebView webView) {
@@ -202,6 +202,12 @@ public class Tab {
   public void restoreState(Bundle state){
     if (mWebView != null)
       mWebView.restoreState(state);
+  }
+
+  public void onDestroy(){
+    if (mWebView != null){
+      mWebView.destroy();
+    }
   }
 
   public interface WebViewCallback {

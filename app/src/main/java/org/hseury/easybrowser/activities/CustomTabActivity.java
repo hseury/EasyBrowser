@@ -74,4 +74,10 @@ public class CustomTabActivity extends Activity {
     mTab.restoreState(savedInstanceState);
   }
 
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    if(mTab != null){
+      mTab.onDestroy();
+    }
+  }
 }

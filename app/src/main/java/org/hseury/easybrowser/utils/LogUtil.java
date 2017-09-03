@@ -4,6 +4,7 @@ import android.util.Log;
 import org.hseury.easybrowser.BuildConfig;
 
 /**
+ * Log util
  * Created by hseury on 8/13/17.
  */
 

@@ -39,8 +39,6 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
   private String mCurrentUrl;
   private boolean mIsLoadResouce = false;
 
-
-
   TabContentViewParent(Context context, Tab tab) {
     super(context);
     mTab = tab;
@@ -51,7 +49,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
     return mContentContainer;
   }
 
-  public void initUi(Context context){
+  public void initUi(Context context) {
     LayoutInflater.from(context).inflate(R.layout.tab_shell, this);
     mInfobarWrapper = (LinearLayout) findViewById(R.id.testshell_activity);
     mInfobarWrapper.setFocusable(true);
@@ -61,7 +59,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
     addView(mInfobarWrapper,
         new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-    mContentContainer = (LinearLayout)findViewById(R.id.content_container);
+    mContentContainer = (LinearLayout) findViewById(R.id.content_container);
 
     initializeUrlField();
     initializeNavigationButtons();
@@ -199,7 +197,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
       mCurrentUrl = mUrlTextView.getText().toString();
     }
 
-    if (newProgress > 60) {
+    if (newProgress > 80) {
       mProgressDrawable.setLevel(0);
     } else {
       mProgressDrawable.setLevel(newProgress * 100);
