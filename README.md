@@ -1,7 +1,7 @@
 # EasyBrowser
 EasyBrowser is an android application, supporting basic browser function, based on chromium android contentshell UI.
 
-## function to be supported
+## function list ( realized function is struck off )
 
 - ~~surfing the web page in single tab~~
 
@@ -18,7 +18,7 @@ EasyBrowser is an android application, supporting basic browser function, based 
 # EasyBrowser
 EasyBrowser是一个安卓应用，提供最简单的浏览器功能，基于chromium项目的android contentshell ui。
 
-## 想做的功能点
+## 功能清单（ 划去的表示功能已完成）
 
 - ~~单Tab查看网页~~
 
