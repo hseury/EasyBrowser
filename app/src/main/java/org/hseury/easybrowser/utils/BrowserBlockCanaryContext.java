@@ -1,7 +1,6 @@
 package org.hseury.easybrowser.utils;
 
 import com.github.moduth.blockcanary.BlockCanaryContext;
-import org.hseury.easybrowser.BuildConfig;
 
 /**
  * Created by hseury on 9/4/17.

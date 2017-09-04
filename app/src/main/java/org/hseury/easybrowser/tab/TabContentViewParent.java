@@ -14,6 +14,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.tencent.smtt.sdk.WebView;
 import org.hseury.easybrowser.R;
 
@@ -24,16 +26,18 @@ import org.hseury.easybrowser.R;
  */
 
 public class TabContentViewParent extends FrameLayout implements Tab.WebViewCallback {
-  private LinearLayout mInfobarWrapper;
+  @Bind(R.id.stop_reload_button) ImageButton mReloadOrStopButton;
+  @Bind(R.id.url) EditText mUrlTextView;
+  @Bind(R.id.prev) ImageButton mPrevButton;
+  @Bind(R.id.next) ImageButton mNextButton;
+  @Bind(R.id.content_container) LinearLayout mContentContainer;
+  @Bind(R.id.testshell_activity) LinearLayout mInfobarWrapper;
+  @Bind(R.id.toolbar) LinearLayout mNavBar;
+
 
   private Tab mTab;
   private Context mContext;
 
-  public EditText mUrlTextView;
-  private ImageButton mPrevButton;
-  private ImageButton mNextButton;
-  private ImageButton mReloadOrStopButton;
-  private LinearLayout mContentContainer;
   Handler handler = new Handler();
   private ClipDrawable mProgressDrawable;
   private String mCurrentUrl;
@@ -51,15 +55,13 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
 
   public void initUi(Context context) {
     LayoutInflater.from(context).inflate(R.layout.tab_shell, this);
-    mInfobarWrapper = (LinearLayout) findViewById(R.id.testshell_activity);
+    ButterKnife.bind(this);
     mInfobarWrapper.setFocusable(true);
     mInfobarWrapper.setFocusableInTouchMode(true);
 
     removeAllViews();
     addView(mInfobarWrapper,
         new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
-    mContentContainer = (LinearLayout) findViewById(R.id.content_container);
 
     initializeUrlField();
     initializeNavigationButtons();
@@ -68,8 +70,6 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
   }
 
   private void initializeUrlField() {
-    mUrlTextView = (EditText) findViewById(R.id.url);
-
     mUrlTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       @Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if ((actionId != EditorInfo.IME_ACTION_GO) && (event == null
@@ -86,7 +86,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
       }
     });
 
-    mUrlTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+    mUrlTextView.setOnFocusChangeListener(new OnFocusChangeListener() {
       @Override public void onFocusChange(View v, boolean hasFocus) {
         setKeyboardVisibilityForUrl(hasFocus);
         mNextButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
@@ -97,7 +97,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
         }
       }
     });
-    mUrlTextView.setOnKeyListener(new View.OnKeyListener() {
+    mUrlTextView.setOnKeyListener(new OnKeyListener() {
       @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
           mTab.requestFocus();
@@ -109,12 +109,11 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
   }
 
   private void initializeNavigationButtons() {
-    mProgressDrawable = (ClipDrawable) (findViewById(R.id.toolbar).getBackground());
+    mProgressDrawable = (ClipDrawable) (mNavBar.getBackground());
     mProgressDrawable.setLevel(0);
 
-    mPrevButton = (ImageButton) findViewById(R.id.prev);
     mPrevButton.setEnabled(false);
-    mPrevButton.setOnClickListener(new View.OnClickListener() {
+    mPrevButton.setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
         if (mTab.canGoBack()) {
           mTab.goBack();
@@ -122,9 +121,8 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
       }
     });
 
-    mNextButton = (ImageButton) findViewById(R.id.next);
     mNextButton.setEnabled(false);
-    mNextButton.setOnClickListener(new View.OnClickListener() {
+    mNextButton.setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
         if (mTab.canGoForward()) {
           mTab.goForward();
@@ -132,8 +130,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
       }
     });
 
-    mReloadOrStopButton = (ImageButton) findViewById(R.id.stop_reload_button);
-    mReloadOrStopButton.setOnClickListener(new View.OnClickListener() {
+    mReloadOrStopButton.setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
         if (mTab.isLoading()) {
           mTab.stopLoading();
