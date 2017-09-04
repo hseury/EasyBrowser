@@ -88,7 +88,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
 
     mUrlTextView.setOnFocusChangeListener(new OnFocusChangeListener() {
       @Override public void onFocusChange(View v, boolean hasFocus) {
-        setKeyboardVisibilityForUrl(hasFocus);
+        //setKeyboardVisibilityForUrl(hasFocus);
         mNextButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
         mPrevButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
         mReloadOrStopButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
