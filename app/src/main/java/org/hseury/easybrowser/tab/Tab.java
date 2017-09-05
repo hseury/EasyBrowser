@@ -3,15 +3,14 @@ package org.hseury.easybrowser.tab;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import org.hseury.easybrowser.webviewframe.IWebViewStub;
+import org.hseury.easybrowser.webviewframe.WebViewFactory;
 
 /**
  * maintain a webview
@@ -20,7 +19,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 public class Tab {
 
-  private WebView mWebView;
+  private IWebViewStub mWebView;
 
   private boolean mLoading;
   public static String currentUrl = "http://hseury.tk";
@@ -38,7 +37,7 @@ public class Tab {
 
   private Context mContext;
 
-  public WebView getWebView() {
+  public IWebViewStub getWebView() {
     return mWebView;
   }
 
@@ -96,7 +95,7 @@ public class Tab {
     setWebView(new WebViewFactory(context).createWebView());
   }
 
-  public void setWebView(WebView webView) {
+  public void setWebView(IWebViewStub webView) {
     mWebView = webView;
 
     if (webView != null) {
@@ -113,35 +112,20 @@ public class Tab {
       mContentViewParent = new TabContentViewParent(mContext, this);
       setCallback(mContentViewParent);
 
-      mContentViewParent.getContentContainer().addView(mWebView,
+      mContentViewParent.getContentContainer().addView(mWebView.getView(),
           new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
               FrameLayout.LayoutParams.MATCH_PARENT));
 
-      if (mWebViewClient != null) {
-        mWebView.setWebViewClient(mWebViewClient);
-      }
-
-      if (mWebChromeClient != null) {
-        mWebView.setWebChromeClient(mWebChromeClient);
-      }
-      initWebSettings();
+      //if (mWebViewClient != null) {
+      //  mWebView.setWebViewClient(mWebViewClient);
+      //}
+      //
+      //if (mWebChromeClient != null) {
+      //  mWebView.setWebChromeClient(mWebChromeClient);
+      //}
     }
   }
 
-  public void initWebSettings() {
-    if (mWebView != null) {
-      mWebSettings = mWebView.getSettings();
-      mWebSettings.setSupportZoom(true);
-      mWebSettings.setUseWideViewPort(true);
-      mWebSettings.setDefaultTextEncodingName("GBK");
-      mWebSettings.setLoadsImagesAutomatically(true);
-      mWebSettings.setJavaScriptEnabled(true);
-      mWebSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-      mWebSettings.setDomStorageEnabled(true);
-      mWebSettings.setSupportMultipleWindows(false);
-      mWebSettings.setLoadWithOverviewMode(true);
-    }
-  }
   public boolean canGoBack() {
     return mWebView != null && mWebView.canGoBack();
   }
