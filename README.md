@@ -7,7 +7,7 @@ EasyBrowser is an android application, supporting basic browser function, based 
 
 - ~~support x5 WebView~~
 
-- support x5 / system WebView switch
+- ~~support x5 / system WebView switch~~
 
 - support multi-tab web surfing
 
@@ -24,7 +24,7 @@ EasyBrowser是一个安卓应用，提供最简单的浏览器功能，基于chr
 
 - ~~使用X5内核~~
 
-- X5内核/系统WebView可切换
+- ~~X5内核/系统WebView可切换~~
 
 - 多Tab浏览网页
 
