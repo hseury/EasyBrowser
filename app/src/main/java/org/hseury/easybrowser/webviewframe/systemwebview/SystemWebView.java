@@ -1,17 +1,20 @@
-package org.hseury.easybrowser.webviewframe;
+package org.hseury.easybrowser.webviewframe.systemwebview;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import org.hseury.easybrowser.webviewframe.IWebChromeClient;
+import org.hseury.easybrowser.webviewframe.IWebView;
+import org.hseury.easybrowser.webviewframe.IWebViewClient;
 
 /**
  * system WebView wrapper
  * Created by hseury on 9/5/17.
  */
 
-public class SystemWebView implements IWebViewStub {
+public class SystemWebView implements IWebView {
   private WebView mWebView;
 
   public SystemWebView(@NonNull WebView webView) {
@@ -76,5 +79,13 @@ public class SystemWebView implements IWebViewStub {
 
   @Override public void setLayoutParams(LinearLayout.LayoutParams layoutParams) {
     mWebView.setLayoutParams(layoutParams);
+  }
+
+  @Override public void setWebChromeClient(IWebChromeClient webChromeClient) {
+    mWebView.setWebChromeClient(new SystemWebChromeClient(webChromeClient));
+  }
+
+  @Override public void setWebViewClient(IWebViewClient webViewClient) {
+    mWebView.setWebViewClient(new SystemWebViewClient(webViewClient) );
   }
 }

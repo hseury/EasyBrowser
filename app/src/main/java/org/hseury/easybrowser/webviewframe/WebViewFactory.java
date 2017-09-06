@@ -1,6 +1,8 @@
 package org.hseury.easybrowser.webviewframe;
 
 import android.content.Context;
+import org.hseury.easybrowser.webviewframe.systemwebview.SystemWebView;
+import org.hseury.easybrowser.webviewframe.x5webview.X5WebView;
 
 /**
  * decide use which type WebView
@@ -13,14 +15,14 @@ public class WebViewFactory {
   private enum WEBVIEW_TYPE{
     SYSTEM_WEBVIEW,X5_WEBVIEW
   }
-  public static final WEBVIEW_TYPE DEFAULT_WEBVIEW_TYPE = WEBVIEW_TYPE.X5_WEBVIEW;
+  public static final WEBVIEW_TYPE DEFAULT_WEBVIEW_TYPE = WEBVIEW_TYPE.SYSTEM_WEBVIEW;
 
   public WebViewFactory(Context context) {
     mContext = context;
   }
 
-  public IWebViewStub createWebView() {
-    IWebViewStub webview;
+  public IWebView createWebView() {
+    IWebView webview;
     switch (DEFAULT_WEBVIEW_TYPE){
       case SYSTEM_WEBVIEW:
         webview = createSystemWebView();

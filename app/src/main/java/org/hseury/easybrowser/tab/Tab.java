@@ -9,7 +9,9 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
-import org.hseury.easybrowser.webviewframe.IWebViewStub;
+import org.hseury.easybrowser.webviewframe.IWebChromeClient;
+import org.hseury.easybrowser.webviewframe.IWebView;
+import org.hseury.easybrowser.webviewframe.IWebViewClient;
 import org.hseury.easybrowser.webviewframe.WebViewFactory;
 
 /**
@@ -19,7 +21,7 @@ import org.hseury.easybrowser.webviewframe.WebViewFactory;
 
 public class Tab {
 
-  private IWebViewStub mWebView;
+  private IWebView mWebView;
 
   private boolean mLoading;
   public static String currentUrl = "http://hseury.tk";
@@ -37,7 +39,7 @@ public class Tab {
 
   private Context mContext;
 
-  public IWebViewStub getWebView() {
+  public IWebView getWebView() {
     return mWebView;
   }
 
@@ -45,13 +47,9 @@ public class Tab {
     return mContentViewParent;
   }
 
-  private WebViewClient mWebViewClient = new WebViewClient() {
-    @Override public void onReceivedLoginRequest(WebView view, String realm, String account,
-        String args) {
-      super.onReceivedLoginRequest(view, realm, account, args);
-    }
+  private IWebViewClient mWebViewClient = new IWebViewClient() {
 
-    @Override public void onPageFinished(WebView view, String url) {
+    @Override public void onPageFinished(IWebView view, String url) {
       super.onPageFinished(view, url);
       mLoading = false;
       if (mCallback !=null){
@@ -59,7 +57,7 @@ public class Tab {
       }
     }
 
-    @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
+    @Override public void onPageStarted(IWebView view, String url, Bitmap favicon) {
       super.onPageStarted(view, url, favicon);
       mLoading = true;
       if (mCallback !=null){
@@ -67,7 +65,7 @@ public class Tab {
       }
     }
 
-    @Override public void onLoadResource(WebView webView, String s) {
+    @Override public void onLoadResource(IWebView webView, String s) {
       super.onLoadResource(webView, s);
       if (mCallback!=null){
         mCallback.onLoadResource(webView,s);
@@ -75,9 +73,9 @@ public class Tab {
     }
   };
 
-  private WebChromeClient mWebChromeClient = new WebChromeClient() {
+  private IWebChromeClient mWebChromeClient = new IWebChromeClient() {
     @Override
-    public void onProgressChanged(WebView view, int newProgress) {
+    public void onProgressChanged(IWebView view, int newProgress) {
       super.onProgressChanged(view, newProgress);
       if (mCallback != null){
         mCallback.onProgressChanged(view,newProgress);
@@ -85,7 +83,7 @@ public class Tab {
     }
 
     @Override
-    public void onReceivedTitle(WebView view, String title) {
+    public void onReceivedTitle(IWebView view, String title) {
       super.onReceivedTitle(view, title);
     }
   };
@@ -95,7 +93,7 @@ public class Tab {
     setWebView(new WebViewFactory(context).createWebView());
   }
 
-  public void setWebView(IWebViewStub webView) {
+  public void setWebView(IWebView webView) {
     mWebView = webView;
 
     if (webView != null) {
@@ -116,13 +114,13 @@ public class Tab {
           new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
               FrameLayout.LayoutParams.MATCH_PARENT));
 
-      //if (mWebViewClient != null) {
-      //  mWebView.setWebViewClient(mWebViewClient);
-      //}
-      //
-      //if (mWebChromeClient != null) {
-      //  mWebView.setWebChromeClient(mWebChromeClient);
-      //}
+      if (mWebViewClient != null) {
+        mWebView.setWebViewClient(mWebViewClient);
+      }
+
+      if (mWebChromeClient != null) {
+        mWebView.setWebChromeClient(mWebChromeClient);
+      }
     }
   }
 
@@ -195,13 +193,13 @@ public class Tab {
   }
 
   public interface WebViewCallback {
-    void onPageStarted(WebView view, String url, Bitmap favicon);
+    void onPageStarted(IWebView view, String url, Bitmap favicon);
 
-    void onPageFinished(WebView view, String url);
+    void onPageFinished(IWebView view, String url);
 
-    void onProgressChanged(WebView view, int newProgress);
+    void onProgressChanged(IWebView view, int newProgress);
 
-    void onLoadResource(WebView view, String s);
+    void onLoadResource(IWebView view, String s);
   }
 
 }

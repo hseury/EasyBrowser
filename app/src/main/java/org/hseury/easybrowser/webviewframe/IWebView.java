@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
  * Created by hseury on 9/5/17.
  */
 
-public interface IWebViewStub {
+public interface IWebView {
   public View getView();
 
   public boolean canGoBack();
@@ -36,5 +36,9 @@ public interface IWebViewStub {
   public void destroy();
 
   public void setLayoutParams(LinearLayout.LayoutParams layoutParams);
+
+  public void setWebChromeClient(IWebChromeClient webChromeClient);
+
+  public void setWebViewClient(IWebViewClient webViewClient);
 
 }

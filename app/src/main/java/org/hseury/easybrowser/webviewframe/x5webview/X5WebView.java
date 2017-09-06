@@ -1,16 +1,21 @@
-package org.hseury.easybrowser.webviewframe;
+package org.hseury.easybrowser.webviewframe.x5webview;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.tencent.smtt.sdk.WebView;
+import org.hseury.easybrowser.webviewframe.IWebChromeClient;
+import org.hseury.easybrowser.webviewframe.IWebView;
+import org.hseury.easybrowser.webviewframe.IWebViewClient;
+import org.hseury.easybrowser.webviewframe.systemwebview.SystemWebChromeClient;
+import org.hseury.easybrowser.webviewframe.systemwebview.SystemWebViewClient;
 
 /**
  * x5 WebView wrapper
  * Created by hseury on 9/5/17.
  */
 
-public class X5WebView implements IWebViewStub {
+public class X5WebView implements IWebView {
   private WebView mWebView;
 
   public X5WebView(WebView webView) {
@@ -75,5 +80,13 @@ public class X5WebView implements IWebViewStub {
 
   @Override public void setLayoutParams(LinearLayout.LayoutParams layoutParams) {
     mWebView.setLayoutParams(layoutParams);
+  }
+
+  @Override public void setWebChromeClient(IWebChromeClient webChromeClient) {
+    mWebView.setWebChromeClient(new X5WebChromeClient(webChromeClient));
+  }
+
+  @Override public void setWebViewClient(IWebViewClient webViewClient) {
+    mWebView.setWebViewClient(new X5WebViewClient(webViewClient) );
   }
 }

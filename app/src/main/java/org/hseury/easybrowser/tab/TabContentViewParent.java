@@ -18,6 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.tencent.smtt.sdk.WebView;
 import org.hseury.easybrowser.R;
+import org.hseury.easybrowser.webviewframe.IWebView;
 
 /**
  * parent container for WebView， including navigation bar， go back / forward button , stop or
@@ -65,6 +66,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
 
     initializeUrlField();
     initializeNavigationButtons();
+    //mReloadOrStopButton.setBackgroundColor(getResources().getColor(android.R.color.white));
 
     mUrlTextView.setText(mTab.getUrl());
   }
@@ -173,22 +175,22 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
 
   private void changeStopOrRefresh() {
     if (mTab.isLoading()) {
-      mReloadOrStopButton.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+      mReloadOrStopButton.setImageResource(R.mipmap.stop);
     } else {
-      mReloadOrStopButton.setImageResource(R.drawable.ic_refresh);
+      mReloadOrStopButton.setImageResource(R.mipmap.refresh);
     }
   }
 
-  @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
+  @Override public void onPageStarted(IWebView view, String url, Bitmap favicon) {
     changeStopOrRefresh();
   }
 
-  @Override public void onPageFinished(WebView view, String url) {
+  @Override public void onPageFinished(IWebView view, String url) {
     enableUIControl();
     changeStopOrRefresh();
   }
 
-  @Override public void onProgressChanged(WebView view, int newProgress) {
+  @Override public void onProgressChanged(IWebView view, int newProgress) {
     if (!view.getUrl().equals(mUrlTextView.getText().toString())) {
       mUrlTextView.setText(view.getUrl());
       mCurrentUrl = mUrlTextView.getText().toString();
@@ -201,7 +203,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
     }
   }
 
-  @Override public void onLoadResource(WebView view, String s) {
+  @Override public void onLoadResource(IWebView view, String s) {
     mIsLoadResouce = true;
   }
 }
