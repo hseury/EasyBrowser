@@ -20,7 +20,7 @@ public class LauncherActivity extends Activity{
   }
   private void callOnCreate(){
     LogUtil.d(TAG,"callOnCreate");
-    Intent intent = new Intent(this,CustomTabActivity.class);
+    Intent intent = new Intent(this,ChromeTabbedActivity.class);
     startActivity(intent);
   };
 }

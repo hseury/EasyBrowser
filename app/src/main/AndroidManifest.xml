@@ -28,7 +28,7 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".activities.CustomTabActivity"/>
+    <activity android:name=".activities.ChromeTabbedActivity"/>
   </application>
 
 </manifest>

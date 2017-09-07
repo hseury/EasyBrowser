@@ -29,9 +29,9 @@ import android.widget.TextView;
 import org.hseury.easybrowser.R;
 import org.hseury.easybrowser.tab.Tab;
 
-public class CustomTabActivity extends Activity {
+public class ChromeTabbedActivity extends Activity {
 
-  public static final String TAG = "CustomTabActivity";
+  public static final String TAG = "ChromeTabbedActivity";
   private Tab mTab;
 
   public static final String DEFAULT_URL = "http://hseury.tk";
