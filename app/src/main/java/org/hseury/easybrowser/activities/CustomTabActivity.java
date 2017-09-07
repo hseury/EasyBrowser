@@ -80,4 +80,11 @@ public class CustomTabActivity extends Activity {
       mTab.onDestroy();
     }
   }
+
+  @Override public void onBackPressed() {
+    if (mTab.canGoBack()){
+      mTab.goBack();
+    }
+    super.onBackPressed();
+  }
 }
