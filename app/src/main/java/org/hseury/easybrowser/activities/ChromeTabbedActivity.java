@@ -53,8 +53,7 @@ public class ChromeTabbedActivity extends Activity {
         mTab.goBack();
         return true;
       } else {
-        finish();
-        System.exit(0);
+        //TODO: kill all activities
       }
     }
     return super.onKeyUp(keyCode, event);
