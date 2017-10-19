@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +83,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
 
         mTab.loadUrl(sanitizeUrl(mUrlTextView.getText().toString()));
         mUrlTextView.clearFocus();
-        setKeyboardVisibilityForUrl(false);
+        //setKeyboardVisibilityForUrl(false);
         mTab.requestFocus();
         return true;
       }
@@ -191,7 +192,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
   }
 
   @Override public void onProgressChanged(IWebView view, int newProgress) {
-    if (!view.getUrl().equals(mUrlTextView.getText().toString())) {
+    if (!TextUtils.equals(view.getUrl(),mUrlTextView.getText().toString())) {
       mUrlTextView.setText(view.getUrl());
       mCurrentUrl = mUrlTextView.getText().toString();
     }
@@ -205,5 +206,6 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
 
   @Override public void onLoadResource(IWebView view, String s) {
     mIsLoadResouce = true;
+    view.loadUrl("javascript: var i = 1；");
   }
 }

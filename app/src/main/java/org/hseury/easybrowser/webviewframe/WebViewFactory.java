@@ -15,7 +15,7 @@ public class WebViewFactory {
   private enum WEBVIEW_TYPE{
     SYSTEM_WEBVIEW,X5_WEBVIEW
   }
-  public static final WEBVIEW_TYPE DEFAULT_WEBVIEW_TYPE = WEBVIEW_TYPE.X5_WEBVIEW;
+  public static final WEBVIEW_TYPE DEFAULT_WEBVIEW_TYPE = WEBVIEW_TYPE.SYSTEM_WEBVIEW;
 
   public WebViewFactory(Context context) {
     mContext = context;
