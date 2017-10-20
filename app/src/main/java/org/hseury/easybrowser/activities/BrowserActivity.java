@@ -17,23 +17,19 @@ import org.hseury.easybrowser.tab.Tab;
 public class BrowserActivity extends Activity {
 
 	public static final String TAG = "BrowserActivity";
-	@Bind(R.id.tab_container) LinearLayout tabContainer;
 	private Controller mController;
 
 	public static final String DEFAULT_URL = "http://hseury.tk";
 
 	@Override protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tab_activity);
-		ButterKnife.bind(this);
-
 		mController = createController();
 		mController.start(DEFAULT_URL);
 	}
 
 	private Controller createController() {
 		Controller controller = new Controller(this);
-		controller.setUi(new BaseUi(tabContainer));
+		controller.setUi(new BaseUi(this));
 		return controller;
 	}
 

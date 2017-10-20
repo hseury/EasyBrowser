@@ -1,8 +1,12 @@
 package org.hseury.easybrowser.controller;
 
+import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import org.hseury.easybrowser.R;
 import org.hseury.easybrowser.tab.Tab;
 
 /**
@@ -10,12 +14,22 @@ import org.hseury.easybrowser.tab.Tab;
  */
 
 public class BaseUi extends Ui {
-	private ViewGroup mContentContainer;
-	public BaseUi(ViewGroup container){
-		mContentContainer = container;
+
+	@Bind(R.id.fixed_titlebar_container) FrameLayout mFixedTitlebarContainer;
+	@Bind(R.id.main_content) FrameLayout mMainContent;
+	private Activity mActivity;
+
+	public BaseUi(Activity browserActivity) {
+		mActivity = browserActivity;
+		FrameLayout frameLayout = (FrameLayout) mActivity.getWindow()
+				.getDecorView()
+				.findViewById(android.R.id.content);
+		View view = LayoutInflater.from(mActivity).inflate(R.layout.tab_activity, frameLayout);
+		ButterKnife.bind(this, view);
 	}
+
 	@Override public void addTab(Tab tab) {
-		mContentContainer.addView(tab.getContentViewParent(),
+		mMainContent.addView(tab.getContentViewParent(),
 				new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 						FrameLayout.LayoutParams.MATCH_PARENT));
 	}
