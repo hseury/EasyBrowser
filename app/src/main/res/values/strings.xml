@@ -1,3 +1,5 @@
 <resources>
   <string name="app_name">EasyBrowser</string>
+  <string name="default_url">http://hseury.tk</string>
+
 </resources>
