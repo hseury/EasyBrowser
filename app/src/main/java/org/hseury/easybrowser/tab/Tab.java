@@ -9,6 +9,7 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import org.hseury.easybrowser.controller.WebViewController;
 import org.hseury.easybrowser.webviewframe.IWebChromeClient;
 import org.hseury.easybrowser.webviewframe.IWebView;
 import org.hseury.easybrowser.webviewframe.IWebViewClient;
@@ -39,6 +40,8 @@ public class Tab {
 
   private Context mContext;
 
+  protected WebViewController mWebViewController;
+
   public IWebView getWebView() {
     return mWebView;
   }
@@ -55,14 +58,19 @@ public class Tab {
       if (mCallback !=null){
         mCallback.onPageFinished(view,url);
       }
+
+      mWebViewController.onPageFinished(Tab.this);
     }
 
     @Override public void onPageStarted(IWebView view, String url, Bitmap favicon) {
       super.onPageStarted(view, url, favicon);
       mLoading = true;
-      if (mCallback !=null){
-        mCallback.onPageStarted(view,url,favicon);
+      if (mCallback != null) {
+        mCallback.onPageStarted(view, url, favicon);
       }
+
+      mWebViewController.onPageStarted(Tab.this, view, favicon);
+
     }
 
     @Override public void onLoadResource(IWebView webView, String s) {
@@ -80,16 +88,21 @@ public class Tab {
       if (mCallback != null){
         mCallback.onProgressChanged(view,newProgress);
       }
+
+      mWebViewController.onProgressChanged(Tab.this,newProgress);
     }
 
     @Override
     public void onReceivedTitle(IWebView view, String title) {
       super.onReceivedTitle(view, title);
+      mWebViewController.onReceivedTitle(Tab.this,title);
     }
   };
 
-  public Tab(Context context) {
+  public Tab(Context context, WebViewController controller) {
     mContext = context;
+
+    mWebViewController = controller;
     setWebView(new WebViewFactory(context).createWebView());
   }
 

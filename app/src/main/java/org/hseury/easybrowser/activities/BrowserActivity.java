@@ -29,7 +29,7 @@ public class BrowserActivity extends Activity {
 
 	private Controller createController() {
 		Controller controller = new Controller(this);
-		controller.setUi(new BaseUi(this));
+		controller.setUi(new BaseUi(this, controller));
 		return controller;
 	}
 

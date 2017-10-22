@@ -20,6 +20,8 @@ import com.tencent.smtt.sdk.WebView;
 import org.hseury.easybrowser.R;
 import org.hseury.easybrowser.webviewframe.IWebView;
 
+import static org.hseury.easybrowser.utils.UrlUtil.sanitizeUrl;
+
 /**
  * parent container for WebView， including navigation bar， go back / forward button , stop or
  * reload button, progressbar, handling with ui interface.
@@ -152,12 +154,6 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
     } else {
       imm.hideSoftInputFromWindow(mUrlTextView.getWindowToken(), 0);
     }
-  }
-
-  private static String sanitizeUrl(String url) {
-    if (url == null) return null;
-    if (url.startsWith("www.") || url.indexOf(":") == -1) url = "http://" + url;
-    return url;
   }
 
   public void enableUIControl() {
