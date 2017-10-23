@@ -1,6 +1,7 @@
 package org.hseury.easybrowser.controller;
 
 import org.hseury.easybrowser.tab.Tab;
+import org.hseury.easybrowser.webviewframe.IWebView;
 
 /**
  * @description: Created by hseury on 10/19/17.
@@ -20,4 +21,6 @@ public abstract class Ui {
 	public abstract void setTitle(String title);
 
 	public abstract void enableUIControl(boolean canGoBack, boolean canGoForward);
+
+	public abstract void onSetWebView(Tab tab, IWebView webView);
 }

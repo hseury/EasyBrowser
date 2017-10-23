@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.hseury.easybrowser.R;
 import org.hseury.easybrowser.tab.Tab;
@@ -144,6 +145,10 @@ public class Controller implements UiController, ActivityController,WebViewContr
 
 	public void enableUIControl() {
 		mUi.enableUIControl(mTab.canGoBack(),mTab.canGoForward());
+	}
+
+	@Override public void onSetWebView(Tab tab, IWebView webView) {
+		mUi.onSetWebView(tab,webView);
 	}
 }
 

@@ -3,12 +3,15 @@ package org.hseury.easybrowser.controller;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import org.hseury.easybrowser.R;
 import org.hseury.easybrowser.tab.Tab;
 import org.hseury.easybrowser.views.TitleBar;
+import org.hseury.easybrowser.webviewframe.IWebView;
 
 /**
  * @description: Created by hseury on 10/19/17.
@@ -37,7 +40,7 @@ public class BaseUi extends Ui {
 	}
 
 	@Override public void addTab(Tab tab) {
-		mMainContent.addView(tab.getContentViewParent(),
+		mMainContent.addView(tab.getWebView().getView(),
 				new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 						FrameLayout.LayoutParams.MATCH_PARENT));
 	}
@@ -64,5 +67,19 @@ public class BaseUi extends Ui {
 
 	@Override public void enableUIControl(boolean canGoBack, boolean canGoForward) {
 		mTitleBar.enableUIControl(canGoBack, canGoForward);
+	}
+
+	/**
+	 * clean tab container
+	 * @param tab
+	 * @param webView
+	 */
+	@Override public void onSetWebView(Tab tab, IWebView webView) {
+		tab.setContainer(mMainContent);
+		if (webView != null) {
+			if (mMainContent != null) {
+				mMainContent.removeAllViews();
+			}
+		}
 	}
 }

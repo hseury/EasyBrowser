@@ -3,6 +3,8 @@ package org.hseury.easybrowser.tab;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -35,19 +37,23 @@ public class Tab {
 
   private WebSettings mWebSettings;
 
-  /** The parent view of the ContentView and the InfoBarContainer. */
-  private TabContentViewParent mContentViewParent;
-
   private Context mContext;
 
-  protected WebViewController mWebViewController;
+  private WebViewController mWebViewController;
+
+  // Main WebView wrapper
+  private ViewGroup mContainer;
+
+  public void setContainer(ViewGroup container) {
+    mContainer = container;
+  }
+
+  public ViewGroup getContainer() {
+    return mContainer;
+  }
 
   public IWebView getWebView() {
     return mWebView;
-  }
-
-  public TabContentViewParent getContentViewParent() {
-    return mContentViewParent;
   }
 
   private IWebViewClient mWebViewClient = new IWebViewClient() {
@@ -109,31 +115,14 @@ public class Tab {
   public void setWebView(IWebView webView) {
     mWebView = webView;
 
-    if (webView != null) {
-      if (mContentViewParent != null) {
-        mContentViewParent.removeAllViews();
-      }
+    mWebViewController.onSetWebView(this, webView);
 
-      mWebView.setLayoutParams(new LinearLayout.LayoutParams(
-          LinearLayout.LayoutParams.MATCH_PARENT,
-          LinearLayout.LayoutParams.MATCH_PARENT,
-          1f));
+    if (mWebViewClient != null) {
+      mWebView.setWebViewClient(mWebViewClient);
+    }
 
-
-      mContentViewParent = new TabContentViewParent(mContext, this);
-      setCallback(mContentViewParent);
-
-      mContentViewParent.getContentContainer().addView(mWebView.getView(),
-          new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-              FrameLayout.LayoutParams.MATCH_PARENT));
-
-      if (mWebViewClient != null) {
-        mWebView.setWebViewClient(mWebViewClient);
-      }
-
-      if (mWebChromeClient != null) {
-        mWebView.setWebChromeClient(mWebChromeClient);
-      }
+    if (mWebChromeClient != null) {
+      mWebView.setWebChromeClient(mWebChromeClient);
     }
   }
 

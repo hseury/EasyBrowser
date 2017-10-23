@@ -17,4 +17,6 @@ public interface WebViewController {
 	void onProgressChanged(Tab tab,int progress);
 
 	void onReceivedTitle(Tab tab, final String title);
+
+	void onSetWebView(Tab tab, IWebView webView);
 }
