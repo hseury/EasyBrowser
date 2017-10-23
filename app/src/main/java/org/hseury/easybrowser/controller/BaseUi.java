@@ -43,7 +43,7 @@ public class BaseUi extends Ui {
 	}
 
 	@Override public void updateStopOrRefresh(int resId) {
-
+		mTitleBar.setStopOrReloadIcon(resId);
 	}
 
 	@Override public String getUrl() {
@@ -60,5 +60,9 @@ public class BaseUi extends Ui {
 
 	@Override public void setTitle(String title) {
 		mTitleBar.setTitle(title);
+	}
+
+	@Override public void enableUIControl(boolean canGoBack, boolean canGoForward) {
+		mTitleBar.enableUIControl(canGoBack, canGoForward);
 	}
 }

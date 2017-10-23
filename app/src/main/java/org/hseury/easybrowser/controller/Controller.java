@@ -121,11 +121,13 @@ public class Controller implements UiController, ActivityController,WebViewContr
 	}
 
 	@Override public void onPageFinished(Tab tab) {
+		enableUIControl();
 		updateStopOrRefresh();
 	}
 
 	@Override public void onPageStarted(Tab tab, IWebView view, Bitmap favicon) {
 		updateStopOrRefresh();
+		mUi.setTitle(view.getUrl());
 	}
 
 	@Override public void onProgressChanged(Tab tab,int newProgress) {
@@ -138,6 +140,10 @@ public class Controller implements UiController, ActivityController,WebViewContr
 
 	@Override public void onReceivedTitle(Tab tab, String title) {
 		mUi.setTitle(title);
+	}
+
+	public void enableUIControl() {
+		mUi.enableUIControl(mTab.canGoBack(),mTab.canGoForward());
 	}
 }
 

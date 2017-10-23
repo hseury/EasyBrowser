@@ -53,6 +53,23 @@ public class TitleBar extends RelativeLayout {
 		mPrevButton.setEnabled(false);
 		mNextButton.setEnabled(false);
 
+		mUrlTextView.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override public void onFocusChange(View v, boolean hasFocus) {
+				//setKeyboardVisibilityForUrl(hasFocus);
+				mNextButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
+				mPrevButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
+				mReloadOrStopButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
+			}
+		});
+
+		mUrlTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				return mUiController.onUrlTextViewEditorAction(v, actionId, event);
+			}
+		});
+
+		setFocusable(true);
+		setFocusableInTouchMode(true);
 	}
 
 	@OnClick({ R.id.stop_reload_button, R.id.url, R.id.prev, R.id.next })
@@ -98,4 +115,22 @@ public class TitleBar extends RelativeLayout {
 	public void setTitle(String title){
 		mUrlTextView.setText(title);
 	}
+
+	public void enableUIControl(boolean canGoBack, boolean canGoForward){
+		if (canGoBack) {
+			mPrevButton.setEnabled(true);
+		} else {
+			mPrevButton.setEnabled(false);
+		}
+		if (canGoForward) {
+			mNextButton.setEnabled(true);
+		} else {
+			mNextButton.setEnabled(false);
+		}
+	}
+
+	public void setStopOrReloadIcon(int resId){
+		mReloadOrStopButton.setImageResource(resId);
+	}
+
 }

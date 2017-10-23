@@ -84,7 +84,7 @@ public class TabContentViewParent extends FrameLayout implements Tab.WebViewCall
 
         mTab.loadUrl(sanitizeUrl(mUrlTextView.getText().toString()));
         mUrlTextView.clearFocus();
-        setKeyboardVisibilityForUrl(false);
+        //setKeyboardVisibilityForUrl(false);
         mTab.requestFocus();
         return true;
       }

@@ -18,4 +18,6 @@ public abstract class Ui {
 	public abstract void setProgress(int progress);
 
 	public abstract void setTitle(String title);
+
+	public abstract void enableUIControl(boolean canGoBack, boolean canGoForward);
 }
