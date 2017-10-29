@@ -19,7 +19,7 @@ public class BrowserActivity extends Activity {
 	public static final String TAG = "BrowserActivity";
 	private Controller mController;
 
-	public static final String DEFAULT_URL = "http://hseury.tk";
+	public static final String DEFAULT_URL = "http://baidu.com";
 
 	@Override protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
