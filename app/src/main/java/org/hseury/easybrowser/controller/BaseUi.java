@@ -82,4 +82,8 @@ public class BaseUi extends Ui {
 			}
 		}
 	}
+
+	@Override public void onPageStopped(Tab tab) {
+
+	}
 }

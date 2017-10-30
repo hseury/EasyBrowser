@@ -2,19 +2,26 @@ package org.hseury.easybrowser.views;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import org.hseury.easybrowser.R;
+import org.hseury.easybrowser.controller.BaseUi;
+import org.hseury.easybrowser.controller.UiController;
 
 /**
  * @description: Created by hseury on 2017/10/26.
  */
 
-public class NavigationBarPhone extends LinearLayout {
+public class NavigationBarPhone extends LinearLayout implements View.OnFocusChangeListener,
+		View.OnClickListener{
 
 	protected UrlInputView mUrlInput;
 
@@ -33,6 +40,10 @@ public class NavigationBarPhone extends LinearLayout {
 	private boolean mOverflowMenuShowing;
 	private View mIncognitoIcon;
 
+	protected BaseUi mBaseUi;
+	protected TitleBar mTitleBar;
+	protected UiController mUiController;
+
 	public NavigationBarPhone(Context context) {
 		super(context);
 	}
@@ -45,11 +56,19 @@ public class NavigationBarPhone extends LinearLayout {
 		super(context, attrs, defStyle);
 	}
 
+	public void setTitleBar(TitleBar titleBar) {
+		mTitleBar = titleBar;
+		mBaseUi = mTitleBar.getUi();
+		mUiController = mTitleBar.getUiController();
+		//TODO: 自动填充相关 hseury
+		//mUrlInput.setController(mUiController);
+	}
+
 	@Override protected void onFinishInflate() {
 		super.onFinishInflate();
 		mUrlInput = (UrlInputView) findViewById(R.id.url);
 		//mUrlInput.setUrlInputListener(this);
-		//mUrlInput.setOnFocusChangeListener(this);
+		mUrlInput.setOnFocusChangeListener(this);
 		//mUrlInput.setSelectAllOnFocus(true);
 		//mUrlInput.addTextChangedListener(this);
 
@@ -71,5 +90,36 @@ public class NavigationBarPhone extends LinearLayout {
 		//mUrlInput.setContainer(this);
 		//mUrlInput.setStateListener(this);
 		mIncognitoIcon = findViewById(R.id.incognito_icon);
+	}
+
+	public void setTitle(String title){
+		mUrlInput.setText(title);
+	}
+
+	public void clearUrlBarFocus(){
+		mUrlInput.clearFocus();
+	}
+
+	@Override public void onFocusChange(View v, boolean hasFocus) {
+		mTabSwitcher.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
+		mMore.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
+		mStopButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
+	}
+
+	@Override public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.stop:
+				mUiController.onStopOrReloadClick();
+				break;
+			default:
+				break;
+		}
+	}
+
+	void stopEditingUrl() {
+		//WebView currentTopWebView = mUiController.openTabToHomePage();
+		//if (currentTopWebView != null) {
+		//	currentTopWebView.requestFocus();
+		//}
 	}
 }

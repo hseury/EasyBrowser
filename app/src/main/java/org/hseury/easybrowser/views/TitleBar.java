@@ -5,9 +5,9 @@ import android.graphics.drawable.ClipDrawable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,8 +17,6 @@ import butterknife.OnClick;
 import org.hseury.easybrowser.R;
 import org.hseury.easybrowser.controller.BaseUi;
 import org.hseury.easybrowser.controller.UiController;
-
-import static org.hseury.easybrowser.utils.UrlUtil.sanitizeUrl;
 
 /**
  * @description: Created by hseury on 10/20/17.
@@ -31,9 +29,17 @@ public class TitleBar extends RelativeLayout {
 	@Bind(R.id.prev) ImageButton mPrevButton;
 	@Bind(R.id.next) ImageButton mNextButton;
 	@Bind(R.id.toolbar) LinearLayout mNavBar;
+	@Bind(R.id.magnify) ImageView mMagnify;
+	@Bind(R.id.stop) ImageView mStop;
+	@Bind(R.id.clear) ImageView mClear;
+	@Bind(R.id.incognito_icon) ImageView mIncognitoIcon;
+	@Bind(R.id.title_bg) LinearLayout mTitleBg;
+	@Bind(R.id.tab_switcher) ImageButton mTabSwitcher;
+	@Bind(R.id.more) ImageButton mMore;
+	@Bind(R.id.taburlbar) NavigationBarPhone mNavigationBarPhone;
 	private ClipDrawable mProgressDrawable;
 
-
+	private BaseUi mBaseUi;
 	private UiController mUiController;
 
 	public TitleBar(Context context, UiController controller) {
@@ -70,12 +76,15 @@ public class TitleBar extends RelativeLayout {
 
 		setFocusable(true);
 		setFocusableInTouchMode(true);
+
+		mNavigationBarPhone.setTitleBar(this);
 	}
 
-	@OnClick({ R.id.stop_reload_button, R.id.url, R.id.prev, R.id.next })
+	@OnClick({ R.id.stop_reload_button, R.id.url, R.id.prev, R.id.next,R.id.stop })
 	public void onViewClicked(View view) {
 		switch (view.getId()) {
 			case R.id.stop_reload_button:
+			case R.id.stop:
 				mUiController.onStopOrReloadClick();
 				break;
 			case R.id.url:
@@ -92,31 +101,33 @@ public class TitleBar extends RelativeLayout {
 		}
 	}
 
-	public void setProgress(int progress){
+	public void setProgress(int progress) {
 		mProgressDrawable.setLevel(progress * 100);
 	}
 
 	private void initializeUrlField() {
-		mUrlTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+		mUrlTextView.setOnEditorActionListener( new TextView.OnEditorActionListener() {
 			@Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				return mUiController.onUrlTextViewEditorAction(v, actionId, event);
 			}
 		});
 	}
 
-	public String getUrl(){
+	public String getUrl() {
 		return mUrlTextView.getText().toString();
 	}
 
 	public void clearUrlTextFocus() {
 		mUrlTextView.clearFocus();
+		mNavigationBarPhone.clearUrlBarFocus();
 	}
 
-	public void setTitle(String title){
+	public void setTitle(String title) {
 		mUrlTextView.setText(title);
+		mNavigationBarPhone.setTitle(title);
 	}
 
-	public void enableUIControl(boolean canGoBack, boolean canGoForward){
+	public void enableUIControl(boolean canGoBack, boolean canGoForward) {
 		if (canGoBack) {
 			mPrevButton.setEnabled(true);
 		} else {
@@ -129,8 +140,17 @@ public class TitleBar extends RelativeLayout {
 		}
 	}
 
-	public void setStopOrReloadIcon(int resId){
+	public void setStopOrReloadIcon(int resId) {
 		mReloadOrStopButton.setImageResource(resId);
+		mStop.setImageResource(resId);
+	}
+
+	public BaseUi getUi() {
+		return mBaseUi;
+	}
+
+	public UiController getUiController() {
+		return mUiController;
 	}
 
 }

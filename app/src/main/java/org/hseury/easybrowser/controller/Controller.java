@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -149,6 +150,18 @@ public class Controller implements UiController, ActivityController,WebViewContr
 
 	@Override public void onSetWebView(Tab tab, IWebView webView) {
 		mUi.onSetWebView(tab,webView);
+	}
+
+	@Override public void stopLoading() {
+		//mLoadStopped = true;
+		//Tab tab = mTabControl.getCurrentTab();
+		//WebView w = getCurrentTopWebView();
+		//if (w != null) {
+		//	w.stopLoading();
+		//	mUi.onPageStopped(tab);
+		//}
+		mTab.stopLoading();
+		mUi.onPageStopped(mTab);
 	}
 }
 

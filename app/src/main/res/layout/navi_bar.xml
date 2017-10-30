@@ -55,7 +55,6 @@
 
     <include
         layout="@layout/title_bar_nav"
-        android:id="@+id/taburlbar"
         />
   </LinearLayout>
 

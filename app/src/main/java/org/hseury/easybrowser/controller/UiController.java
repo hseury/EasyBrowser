@@ -4,7 +4,9 @@ import android.view.KeyEvent;
 import android.widget.TextView;
 
 /**
- * @description: Created by hseury on 10/19/17.
+ * @description:
+ * views control model
+ * Created by hseury on 10/19/17.
  */
 
 public interface UiController {
@@ -19,4 +21,6 @@ public interface UiController {
 	void onUrlEditClick();
 
 	boolean onUrlTextViewEditorAction(TextView v, int actionId, KeyEvent event);
+
+	void stopLoading();
 }

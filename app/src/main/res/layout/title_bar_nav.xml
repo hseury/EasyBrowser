@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:background="@color/white"
+    android:id="@+id/taburlbar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
     android:elevation="8dp">

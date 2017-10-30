@@ -23,4 +23,6 @@ public abstract class Ui {
 	public abstract void enableUIControl(boolean canGoBack, boolean canGoForward);
 
 	public abstract void onSetWebView(Tab tab, IWebView webView);
+
+	public abstract void onPageStopped(Tab tab);
 }
