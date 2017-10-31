@@ -15,6 +15,8 @@ EasyBrowser is an android application, supporting basic browser function, based 
 
 - remember recent input in address bar
 
+- support downloading
+
 # EasyBrowser
 EasyBrowser是一个安卓应用，提供最简单的浏览器功能，基于chromium项目的android contentshell ui。
 
@@ -32,6 +34,7 @@ EasyBrowser是一个安卓应用，提供最简单的浏览器功能，基于chr
 
 - 存储最近的地址栏输入
 
+- 支持下载功能
 
 # UI sample
 ![EasyBrowserScreenUI](./img/EasyBrowser.png)
