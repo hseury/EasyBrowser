@@ -1,13 +1,15 @@
 package org.hseury.easybrowser.views;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
+//import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import org.hseury.easybrowser.utils.ReflectHelper;
 
@@ -15,7 +17,7 @@ import org.hseury.easybrowser.utils.ReflectHelper;
  * @description: Created by hseury on 2017/10/29.
  */
 
-public class UrlInputView extends AppCompatAutoCompleteTextView implements
+public class UrlInputView extends AutoCompleteTextView implements
 		TextView.OnEditorActionListener {
 	enum STATE {NORMAL, HIGHLIGHTED, EDITED}
 
@@ -43,14 +45,13 @@ public class UrlInputView extends AppCompatAutoCompleteTextView implements
 		setOnEditorActionListener(this);
 		//mAdapter = new SuggestionsAdapter(ctx, this);
 		//setAdapter(mAdapter);
-		//setSelectAllOnFocus(true);
-		//onConfigurationChanged(ctx.getResources().getConfiguration());
-		//setThreshold(1);
+		setSelectAllOnFocus(true);
+		onConfigurationChanged(ctx.getResources().getConfiguration());
+		setThreshold(1);
 		//setOnItemClickListener(this);
 		//mNeedsUpdate = false;
 		//addTextChangedListener(this);
 		//setDropDownAnchor(com.android.stockbrowser.R.id.taburlbar);
-		//mState = StateListener.STATE_NORMAL;
 		mState = STATE.NORMAL;
 		//mContext = ctx;
 	}
@@ -107,6 +108,28 @@ public class UrlInputView extends AppCompatAutoCompleteTextView implements
 				}}, POST_DELAY);
 		}
 		return res;
+	}
+
+	@Override
+	protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
+		super.onFocusChanged(focused, direction, previouslyFocusedRect);
+		STATE state = STATE.NORMAL;
+		if (focused) {
+			if (hasSelection()) {
+				state = STATE.HIGHLIGHTED;
+			} else {
+				state = STATE.EDITED;
+			}
+		} else {
+			// reset the selection state
+			state = STATE.NORMAL;
+		}
+		final STATE s = state;
+		post(new Runnable() {
+			public void run() {
+				changeState(s);
+			}
+		});
 	}
 
 	private void changeState(STATE newState) {

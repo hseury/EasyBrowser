@@ -20,8 +20,8 @@ import org.hseury.easybrowser.controller.UiController;
  * @description: Created by hseury on 2017/10/26.
  */
 
-public class NavigationBarPhone extends LinearLayout implements View.OnFocusChangeListener,
-		View.OnClickListener{
+public class NavigationBarPhone extends LinearLayout
+		implements View.OnFocusChangeListener, View.OnClickListener, UrlInputView.UrlInputListener {
 
 	protected UrlInputView mUrlInput;
 
@@ -121,5 +121,49 @@ public class NavigationBarPhone extends LinearLayout implements View.OnFocusChan
 		//if (currentTopWebView != null) {
 		//	currentTopWebView.requestFocus();
 		//}
+	}
+
+	/***********************  input url lisetener implements ********************/
+	@Override public void onStateChanged(UrlInputView.STATE state) {
+		switch (state) {
+			case NORMAL:
+				mStopButton.setVisibility(View.GONE);
+				mClearButton.setVisibility(View.GONE);
+				mMagnify.setVisibility(View.GONE);
+				mTabSwitcher.setVisibility(View.VISIBLE);
+				mTitleContainer.setBackgroundDrawable(null);
+				mMore.setVisibility(View.VISIBLE);
+				break;
+			case HIGHLIGHTED:
+				mStopButton.setVisibility(View.VISIBLE);
+				mClearButton.setVisibility(View.GONE);
+				mMagnify.setVisibility(View.GONE);
+				mTabSwitcher.setVisibility(View.GONE);
+				mMore.setVisibility(View.GONE);
+				mTitleContainer.setBackgroundDrawable(mTextfieldBgDrawable);
+				break;
+			case EDITED:
+				mStopButton.setVisibility(View.GONE);
+				mClearButton.setVisibility(View.VISIBLE);
+				mMagnify.setVisibility(View.VISIBLE);
+				mTabSwitcher.setVisibility(View.GONE);
+				mMore.setVisibility(View.GONE);
+				mTitleContainer.setBackgroundDrawable(mTextfieldBgDrawable);
+				break;
+			default:
+				break;
+		}
+	}
+
+	@Override public void onAction(String text, String extra, String source) {
+
+	}
+
+	@Override public void onCopySuggestion(String text) {
+
+	}
+
+	@Override public void onDismiss() {
+
 	}
 }

@@ -44,10 +44,13 @@
         android:hint="@string/search_hint"
         android:singleLine="true"
         android:ellipsize="end"
+        android:textColor="@color/black"
         android:lines="1"
         android:scrollHorizontally="true"
         android:inputType="textUri"
         android:imeOptions="actionGo|flagNoExtractUi|flagNoFullscreen"
+        style="@style/Suggestions"
+        android:theme="@style/Widget.UrlInputView"
         android:background="@null" />
     <ImageView
         android:id="@+id/clear"
