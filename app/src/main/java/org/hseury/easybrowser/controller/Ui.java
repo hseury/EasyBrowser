@@ -25,4 +25,6 @@ public abstract class Ui {
 	public abstract void onSetWebView(Tab tab, IWebView webView);
 
 	public abstract void onPageStopped(Tab tab);
+
+	public abstract void hideStopButton();
 }

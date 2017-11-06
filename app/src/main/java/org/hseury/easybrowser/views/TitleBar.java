@@ -140,6 +140,10 @@ public class TitleBar extends RelativeLayout {
 		}
 	}
 
+	public void hideStopButton(){
+		mStop.setVisibility(GONE);
+	}
+
 	public void setStopOrReloadIcon(int resId) {
 		mReloadOrStopButton.setImageResource(resId);
 		mStop.setImageResource(resId);

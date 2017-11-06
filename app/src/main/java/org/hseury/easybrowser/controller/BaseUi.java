@@ -86,4 +86,8 @@ public class BaseUi extends Ui {
 	@Override public void onPageStopped(Tab tab) {
 
 	}
+
+	@Override public void hideStopButton() {
+		mTitleBar.hideStopButton();
+	}
 }
