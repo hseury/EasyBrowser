@@ -26,5 +26,7 @@ public abstract class Ui {
 
 	public abstract void onPageStopped(Tab tab);
 
+	public abstract void onProgressChanged(Tab tab);
+
 	public abstract void hideStopButton();
 }

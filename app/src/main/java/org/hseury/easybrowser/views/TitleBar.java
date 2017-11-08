@@ -103,6 +103,11 @@ public class TitleBar extends RelativeLayout {
 
 	public void setProgress(int progress) {
 		mProgressDrawable.setLevel(progress * 100);
+		if (progress >= 100) {
+			mNavigationBarPhone.onProgressStopped();
+		}else{
+			mNavigationBarPhone.onProgressStarted();
+		}
 	}
 
 	private void initializeUrlField() {

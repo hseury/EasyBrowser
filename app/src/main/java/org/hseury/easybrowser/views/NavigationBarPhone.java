@@ -84,8 +84,8 @@ public class NavigationBarPhone extends LinearLayout
 		mTitleContainer = findViewById(R.id.title_bg);
 		//setFocusState(false);
 		Resources res = getContext().getResources();
-		mStopDrawable = res.getDrawable(R.drawable.stop);
-		mRefreshDrawable = res.getDrawable(R.drawable.refresh);
+		mStopDrawable = res.getDrawable(R.drawable.ic_stop);
+		mRefreshDrawable = res.getDrawable(R.drawable.ic_refresh);
 		mTextfieldBgDrawable = res.getDrawable(R.drawable.textfield_active_holo_dark);
 		//mUrlInput.setContainer(this);
 		mUrlInput.setStateListener(this);
@@ -165,5 +165,15 @@ public class NavigationBarPhone extends LinearLayout
 
 	@Override public void onDismiss() {
 
+	}
+
+	public void onProgressStopped() {
+		mStopButton.setImageDrawable(mRefreshDrawable);
+		onStateChanged(mUrlInput.getState());
+	}
+	public void onProgressStarted() {
+		if (mStopButton.getDrawable() != mStopDrawable) {
+			mStopButton.setImageDrawable(mStopDrawable);
+		}
 	}
 }

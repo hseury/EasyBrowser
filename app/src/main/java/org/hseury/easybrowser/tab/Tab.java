@@ -43,6 +43,10 @@ public class Tab {
 
   // Main WebView wrapper
   private ViewGroup mContainer;
+  // The last reported progress of the current page
+  private int mPageLoadProgress;
+
+  private static final int INITIAL_PROGRESS = 5;
 
   public void setContainer(ViewGroup container) {
     mContainer = container;
@@ -71,6 +75,7 @@ public class Tab {
     @Override public void onPageStarted(IWebView view, String url, Bitmap favicon) {
       super.onPageStarted(view, url, favicon);
       mLoading = true;
+      mPageLoadProgress = INITIAL_PROGRESS;
       if (mCallback != null) {
         mCallback.onPageStarted(view, url, favicon);
       }
@@ -95,6 +100,7 @@ public class Tab {
         mCallback.onProgressChanged(view,newProgress);
       }
 
+      mPageLoadProgress = newProgress;
       mWebViewController.onProgressChanged(Tab.this,newProgress);
     }
 
@@ -149,6 +155,7 @@ public class Tab {
   public void loadUrl(String url) {
     if (mWebView != null) {
       mWebView.loadUrl(url);
+      mPageLoadProgress = INITIAL_PROGRESS;
     }
   }
 
@@ -192,6 +199,10 @@ public class Tab {
     if (mWebView != null){
       mWebView.destroy();
     }
+  }
+
+  public int getProgress() {
+    return mPageLoadProgress;
   }
 
   public interface WebViewCallback {

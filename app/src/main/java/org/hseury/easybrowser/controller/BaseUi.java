@@ -90,4 +90,8 @@ public class BaseUi extends Ui {
 	@Override public void hideStopButton() {
 		mTitleBar.hideStopButton();
 	}
+
+	@Override public void onProgressChanged(Tab tab) {
+		mTitleBar.setProgress(tab.getProgress());
+	}
 }

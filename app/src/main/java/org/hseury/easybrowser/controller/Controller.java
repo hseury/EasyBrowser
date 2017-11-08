@@ -143,6 +143,8 @@ public class Controller implements UiController, ActivityController,WebViewContr
 		} else {
 			mUi.setProgress(newProgress);
 		}
+
+		mUi.onProgressChanged(tab);
 	}
 
 	@Override public void onReceivedTitle(Tab tab, String title) {

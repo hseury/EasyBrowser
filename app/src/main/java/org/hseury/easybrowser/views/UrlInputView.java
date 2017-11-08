@@ -162,4 +162,8 @@ public class UrlInputView extends AutoCompleteTextView implements
 		// update listener
 		changeState(mState);
 	}
+
+	public STATE getState() {
+		return mState;
+	}
 }
