@@ -88,7 +88,7 @@ public class NavigationBarPhone extends LinearLayout
 		mRefreshDrawable = res.getDrawable(R.drawable.refresh);
 		mTextfieldBgDrawable = res.getDrawable(R.drawable.textfield_active_holo_dark);
 		//mUrlInput.setContainer(this);
-		//mUrlInput.setStateListener(this);
+		mUrlInput.setStateListener(this);
 		mIncognitoIcon = findViewById(R.id.incognito_icon);
 	}
 

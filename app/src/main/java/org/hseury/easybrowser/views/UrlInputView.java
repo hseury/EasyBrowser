@@ -148,4 +148,18 @@ public class UrlInputView extends AutoCompleteTextView implements
 
 		public void onStateChanged(STATE state);
 	}
+
+	@Override
+	protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+		super.onTextChanged(text, start, lengthBefore, lengthAfter);
+		if(mState == STATE.HIGHLIGHTED){
+			changeState(STATE.EDITED);
+		}
+	}
+
+	public void setStateListener(UrlInputListener listener) {
+		mListener = listener;
+		// update listener
+		changeState(mState);
+	}
 }

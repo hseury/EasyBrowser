@@ -124,6 +124,7 @@ public class Controller implements UiController, ActivityController,WebViewContr
 
 	@Override public void onPageFinished(Tab tab) {
 		enableUIControl();
+		updateStopOrRefresh();
 		hideStopButton();
 	}
 

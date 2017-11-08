@@ -146,7 +146,7 @@ public class TitleBar extends RelativeLayout {
 
 	public void setStopOrReloadIcon(int resId) {
 		mReloadOrStopButton.setImageResource(resId);
-		mStop.setImageResource(resId);
+		//mStop.setImageResource(resId);
 	}
 
 	public BaseUi getUi() {
