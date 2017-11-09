@@ -1,9 +1,12 @@
 package org.hseury.easybrowser.views;
 
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -14,7 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import org.hseury.easybrowser.R;
 import org.hseury.easybrowser.controller.BaseUi;
+import org.hseury.easybrowser.controller.Controller;
 import org.hseury.easybrowser.controller.UiController;
+import org.hseury.easybrowser.tab.Tab;
+import org.hseury.easybrowser.utils.UrlUtil;
 
 /**
  * @description: Created by hseury on 2017/10/26.
@@ -121,9 +127,10 @@ public class NavigationBarPhone extends LinearLayout
 		//if (currentTopWebView != null) {
 		//	currentTopWebView.requestFocus();
 		//}
+		((Controller)mUiController).getTab().requestFocus();
 	}
 
-	/***********************  input url lisetener implements ********************/
+	/***********************  input url listener implements ********************/
 	@Override public void onStateChanged(UrlInputView.STATE state) {
 		switch (state) {
 			case NORMAL:
@@ -156,7 +163,31 @@ public class NavigationBarPhone extends LinearLayout
 	}
 
 	@Override public void onAction(String text, String extra, String source) {
-
+		stopEditingUrl();
+		String url = UrlUtil.sanitizeUrl(text);
+		//Tab t = mBaseUi.getActiveTab();
+		// Only shortcut javascript URIs for now, as there is special
+		// logic in UrlHandler for other schemas
+		//if (url != null && t != null && url.startsWith("javascript:")) {
+		//	mUiController.loadUrl(t, url);
+		//	setDisplayTitle(text);
+		//	return;
+		//}
+		//Intent i = new Intent();
+		//String action = Intent.ACTION_SEARCH;
+		//i.setAction(action);
+		//i.putExtra(SearchManager.QUERY, text);
+		//if (extra != null) {
+		//	i.putExtra(SearchManager.EXTRA_DATA_KEY, extra);
+		//}
+		//if (source != null) {
+		//	Bundle appData = new Bundle();
+		//	appData.putString("source", source);
+		//	i.putExtra("source", appData);
+		//}
+		//mUiController.handleNewIntent(i);
+		//setDisplayTitle(text);
+		((Controller)mUiController).getTab().loadUrl(url);
 	}
 
 	@Override public void onCopySuggestion(String text) {

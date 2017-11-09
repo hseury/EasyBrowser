@@ -93,7 +93,7 @@ public class UrlInputView extends AutoCompleteTextView implements
 			//	url = engineInfo.getSearchUriForQuery(url);
 			//	// mLister.onAction can take it from here without logging
 			//}
-			//mListener.onAction(url, extra, source);
+			mListener.onAction(url, extra, source);
 		}
 	}
 

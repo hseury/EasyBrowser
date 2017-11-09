@@ -170,5 +170,9 @@ public class Controller implements UiController, ActivityController,WebViewContr
 		mTab.stopLoading();
 		mUi.onPageStopped(mTab);
 	}
+
+	public Tab getTab() {
+		return mTab;
+	}
 }
 
