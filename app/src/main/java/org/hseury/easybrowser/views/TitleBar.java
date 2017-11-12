@@ -2,15 +2,13 @@ package org.hseury.easybrowser.views;
 
 import android.content.Context;
 import android.graphics.drawable.ClipDrawable;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,6 +21,9 @@ import org.hseury.easybrowser.controller.UiController;
  */
 
 public class TitleBar extends RelativeLayout {
+
+	private static final int PROGRESS_MAX = 100;
+
 	@Bind(R.id.magnify) ImageView mMagnify;
 	@Bind(R.id.stop) ImageView mStop;
 	@Bind(R.id.clear) ImageView mClear;
@@ -31,6 +32,7 @@ public class TitleBar extends RelativeLayout {
 	@Bind(R.id.tab_switcher) ImageButton mTabSwitcher;
 	@Bind(R.id.more) ImageButton mMore;
 	@Bind(R.id.taburlbar) NavigationBarPhone mNavigationBarPhone;
+	@Bind(R.id.progress) PageProgressView mProgress;
 	private ClipDrawable mProgressDrawable;
 
 	private BaseUi mBaseUi;
@@ -53,8 +55,7 @@ public class TitleBar extends RelativeLayout {
 		mNavigationBarPhone.setTitleBar(this);
 	}
 
-	@OnClick({ R.id.url,R.id.stop })
-	public void onViewClicked(View view) {
+	@OnClick({ R.id.url, R.id.stop }) public void onViewClicked(View view) {
 		switch (view.getId()) {
 			case R.id.stop:
 				mUiController.onStopOrReloadClick();
@@ -67,12 +68,17 @@ public class TitleBar extends RelativeLayout {
 		}
 	}
 
-	public void setProgress(int progress) {
-		if (progress >= 100) {
+	public void setProgress(int newProgress) {
+		if (newProgress >= 100) {
 			mNavigationBarPhone.onProgressStopped();
-		}else{
+			mProgress.setProgress(PageProgressView.MAX_PROGRESS);
+			mProgress.setVisibility(View.GONE);
+		} else {
 			mNavigationBarPhone.onProgressStarted();
+			mProgress.setVisibility(View.VISIBLE);
+			mProgress.setProgress(50 * PageProgressView.MAX_PROGRESS / PROGRESS_MAX);
 		}
+
 	}
 
 	private void initializeUrlField() {
@@ -94,7 +100,7 @@ public class TitleBar extends RelativeLayout {
 
 	}
 
-	public void hideStopButton(){
+	public void hideStopButton() {
 		mStop.setVisibility(GONE);
 	}
 
@@ -109,5 +115,4 @@ public class TitleBar extends RelativeLayout {
 	public UiController getUiController() {
 		return mUiController;
 	}
-
 }

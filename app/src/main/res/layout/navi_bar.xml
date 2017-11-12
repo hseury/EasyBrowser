@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/titlebar"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="wrap_content"
+    android:elevation="8dp">
     <include
+        android:id="@+id/taburlbar"
         layout="@layout/title_bar_nav"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
         />
-</merge>
+    <org.hseury.easybrowser.views.PageProgressView
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_below="@id/taburlbar"
+        android:src="@drawable/progress"
+        android:layout_marginTop="@dimen/progress_bar_margin"
+        android:visibility="visible" />
+</RelativeLayout>
