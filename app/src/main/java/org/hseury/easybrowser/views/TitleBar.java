@@ -23,12 +23,6 @@ import org.hseury.easybrowser.controller.UiController;
  */
 
 public class TitleBar extends RelativeLayout {
-
-	@Bind(R.id.stop_reload_button) ImageButton mReloadOrStopButton;
-	@Bind(R.id.url) EditText mUrlTextView;
-	@Bind(R.id.prev) ImageButton mPrevButton;
-	@Bind(R.id.next) ImageButton mNextButton;
-	@Bind(R.id.toolbar) LinearLayout mNavBar;
 	@Bind(R.id.magnify) ImageView mMagnify;
 	@Bind(R.id.stop) ImageView mStop;
 	@Bind(R.id.clear) ImageView mClear;
@@ -53,48 +47,20 @@ public class TitleBar extends RelativeLayout {
 		View view = factory.inflate(R.layout.navi_bar, this);
 		ButterKnife.bind(this, view);
 
-		mProgressDrawable = (ClipDrawable) (mNavBar.getBackground());
-		mProgressDrawable.setLevel(0);
-
-		mPrevButton.setEnabled(false);
-		mNextButton.setEnabled(false);
-
-		mUrlTextView.setOnFocusChangeListener(new OnFocusChangeListener() {
-			@Override public void onFocusChange(View v, boolean hasFocus) {
-				//setKeyboardVisibilityForUrl(hasFocus);
-				mNextButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
-				mPrevButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
-				mReloadOrStopButton.setVisibility(hasFocus ? View.GONE : View.VISIBLE);
-			}
-		});
-
-		mUrlTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-			@Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				return mUiController.onUrlTextViewEditorAction(v, actionId, event);
-			}
-		});
-
 		setFocusable(true);
 		setFocusableInTouchMode(true);
 
 		mNavigationBarPhone.setTitleBar(this);
 	}
 
-	@OnClick({ R.id.stop_reload_button, R.id.url, R.id.prev, R.id.next,R.id.stop })
+	@OnClick({ R.id.url,R.id.stop })
 	public void onViewClicked(View view) {
 		switch (view.getId()) {
-			case R.id.stop_reload_button:
 			case R.id.stop:
 				mUiController.onStopOrReloadClick();
 				break;
 			case R.id.url:
 				mUiController.onUrlEditClick();
-				break;
-			case R.id.prev:
-				mUiController.onPreClick();
-				break;
-			case R.id.next:
-				mUiController.onNextClick();
 				break;
 			default:
 				break;
@@ -102,7 +68,6 @@ public class TitleBar extends RelativeLayout {
 	}
 
 	public void setProgress(int progress) {
-		mProgressDrawable.setLevel(progress * 100);
 		if (progress >= 100) {
 			mNavigationBarPhone.onProgressStopped();
 		}else{
@@ -111,38 +76,22 @@ public class TitleBar extends RelativeLayout {
 	}
 
 	private void initializeUrlField() {
-		mUrlTextView.setOnEditorActionListener( new TextView.OnEditorActionListener() {
-			@Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				return mUiController.onUrlTextViewEditorAction(v, actionId, event);
-			}
-		});
 	}
 
 	public String getUrl() {
-		return mUrlTextView.getText().toString();
+		return mNavigationBarPhone.getUrlInput().getText().toString();
 	}
 
 	public void clearUrlTextFocus() {
-		mUrlTextView.clearFocus();
 		mNavigationBarPhone.clearUrlBarFocus();
 	}
 
 	public void setTitle(String title) {
-		mUrlTextView.setText(title);
 		mNavigationBarPhone.setTitle(title);
 	}
 
 	public void enableUIControl(boolean canGoBack, boolean canGoForward) {
-		if (canGoBack) {
-			mPrevButton.setEnabled(true);
-		} else {
-			mPrevButton.setEnabled(false);
-		}
-		if (canGoForward) {
-			mNextButton.setEnabled(true);
-		} else {
-			mNextButton.setEnabled(false);
-		}
+
 	}
 
 	public void hideStopButton(){
@@ -150,8 +99,7 @@ public class TitleBar extends RelativeLayout {
 	}
 
 	public void setStopOrReloadIcon(int resId) {
-		mReloadOrStopButton.setImageResource(resId);
-		//mStop.setImageResource(resId);
+		mStop.setImageResource(resId);
 	}
 
 	public BaseUi getUi() {

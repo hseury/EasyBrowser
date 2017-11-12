@@ -207,4 +207,8 @@ public class NavigationBarPhone extends LinearLayout
 			mStopButton.setImageDrawable(mStopDrawable);
 		}
 	}
+
+	public UrlInputView getUrlInput() {
+		return mUrlInput;
+	}
 }
