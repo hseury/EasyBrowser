@@ -11,7 +11,7 @@ EasyBrowser is an android application, supporting basic browser function, based 
 
 - support multi-tab web surfing
 
-- progress bar
+- ~~progress bar~~
 
 - remember recent input in address bar
 
@@ -30,7 +30,7 @@ EasyBrowser是一个安卓应用，提供最简单的浏览器功能，基于chr
 
 - 多Tab浏览网页
 
-- 优化进度条
+- ~~优化进度条~~
 
 - 存储最近的地址栏输入
 
