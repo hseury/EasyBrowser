@@ -142,6 +142,7 @@ public class NavigationBarPhone extends LinearLayout
 				mMore.setVisibility(View.VISIBLE);
 				break;
 			case HIGHLIGHTED:
+				mUiController.onUrlBarHighted();
 				mStopButton.setVisibility(View.VISIBLE);
 				mClearButton.setVisibility(View.GONE);
 				mMagnify.setVisibility(View.GONE);

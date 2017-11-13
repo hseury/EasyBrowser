@@ -61,7 +61,7 @@ public class TitleBar extends RelativeLayout {
 				mUiController.onStopOrReloadClick();
 				break;
 			case R.id.url:
-				mUiController.onUrlEditClick();
+				//mUiController.onUrlEditClick();
 				break;
 			default:
 				break;

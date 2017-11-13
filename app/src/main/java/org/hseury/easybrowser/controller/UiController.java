@@ -18,7 +18,7 @@ public interface UiController {
 
 	void onStopOrReloadClick();
 
-	void onUrlEditClick();
+	void onUrlBarHighted();
 
 	boolean onUrlTextViewEditorAction(TextView v, int actionId, KeyEvent event);
 

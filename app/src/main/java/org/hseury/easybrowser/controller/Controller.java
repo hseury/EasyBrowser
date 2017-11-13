@@ -92,8 +92,8 @@ public class Controller implements UiController, ActivityController,WebViewContr
 		}
 	}
 
-	@Override public void onUrlEditClick() {
-
+	@Override public void onUrlBarHighted() {
+		mUi.setTitle(mTab.getUrl());
 	}
 
 	@Override public void onStopOrReloadClick() {
@@ -138,12 +138,6 @@ public class Controller implements UiController, ActivityController,WebViewContr
 	}
 
 	@Override public void onProgressChanged(Tab tab,int newProgress) {
-		if (newProgress > 80) {
-			mUi.setProgress(0);
-		} else {
-			mUi.setProgress(newProgress);
-		}
-
 		mUi.onProgressChanged(tab);
 	}
 
