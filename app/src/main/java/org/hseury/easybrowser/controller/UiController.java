@@ -1,6 +1,8 @@
 package org.hseury.easybrowser.controller;
 
+import android.app.Activity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 /**
@@ -23,4 +25,10 @@ public interface UiController {
 	boolean onUrlTextViewEditorAction(TextView v, int actionId, KeyEvent event);
 
 	void stopLoading();
+
+	Activity getActivity();
+
+	boolean onOptionsItemSelected(MenuItem item);
+
+
 }

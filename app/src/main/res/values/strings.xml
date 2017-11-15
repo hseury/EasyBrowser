@@ -2,4 +2,43 @@
   <string name="app_name">EasyBrowser</string>
   <string name="default_url">http://hseury.tk</string>
   <string name="search_hint">Search or type URL</string>
+  <!--pop menu start -->
+  <!-- Name of menu item of a new tab.  Also used in the title bar when displaying a new tab -->
+  <string name="new_tab">New tab</string>
+  <!-- Name of menu item of a new incognito tab.  Also used in the
+       title bar when displaying a new tab [CHAR LIMIT=30] -->
+  <string name="new_incognito_tab">New incognito tab</string>
+  <!-- Menu item to open the bookmarks page. This is a shorter version that
+        is displayed with an icon -->
+  <string name="bookmarks">Bookmarks</string>
+  <!-- Menu item that opens a dialog to save a bookmark for the current page [CHAR LIMIT=30] -->
+  <string name="save_to_bookmarks">Save to bookmarks</string>
+  <!-- Menu item -->
+  <string name="page_info">Page info</string>
+  <!-- Settings screen strings -->
+  <!-- Menu item to open the Settings screen -->
+  <string name="menu_preferences">Settings</string>
+  <!-- Do not translate.  Testing only -->
+  <string name="dump_nav" translatable="false">Dump navigation cache</string>
+  <!-- Menu item to stop the current page from loading. -->
+  <string name="stop">Stop</string>
+  <!-- Menu item to reload or refresh the current page. -->
+  <string name="reload">Refresh</string>
+  <!-- Menu item to go to the next page (only useful if the user has previously hit back.) -->
+  <string name="forward">Forward</string>
+  <!-- Menu item -->
+  <string name="share_page">Share page</string>
+  <!-- Popup menu checkbox that allows the user to request the desktop version of a webpage [CHAR LIMIT=50] -->
+  <string name="ua_switcher_desktop">Request desktop site</string>
+  <!-- Popup menu option to load the live version of a saved page [CHAR LIMIT=20] -->
+  <string name="snapshot_go_live">Go live</string>
+  <!-- Menu item to close all other tabs [CHAR LIMIT=40] -->
+  <string name="close_other_tabs">Close other tabs</string>
+  <!-- Name of tab containing the user's complete history, organized by time of last visit -->
+  <string name="tab_history">History</string>
+  <!-- Name of tab containing the user's saved pages, organized by time created [CHAR LIMIT=20] -->
+  <string name="tab_snapshots">Saved pages</string>
+  <!--pop menu end -->
+
+
 </resources>

@@ -2,6 +2,8 @@ package org.hseury.easybrowser.controller;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -94,4 +96,48 @@ public class BaseUi extends Ui {
 	@Override public void onProgressChanged(Tab tab) {
 		mTitleBar.setProgress(tab.getProgress());
 	}
+
+	@Override public boolean onPrepareOptionsMenu(Menu menu) {
+		updateMenuState(null,menu);
+		return true;
+	}
+
+	@Override public void updateMenuState(Tab tab, Menu menu) {
+		MenuItem bm = menu.findItem(R.id.bookmarks_menu_id);
+		if (bm != null) {
+			bm.setVisible(true);
+		}
+		MenuItem abm = menu.findItem(R.id.add_bookmark_menu_id);
+		if (abm != null) {
+			abm.setVisible(true /*(tab != null)&& !tab.isSnapshot() && !showingNavScreen()*/);
+		}
+		MenuItem info = menu.findItem(R.id.page_info_menu_id);
+		if (info != null) {
+			info.setVisible(false);
+		}
+		MenuItem newTab = menu.findItem(R.id.new_tab_menu_id);
+		if (newTab != null /*&& !mUseQuickControls*/) {
+			newTab.setVisible(false);
+		}
+		MenuItem newIncognitoTab = menu.findItem(R.id.new_incognito_tab_menu_id);
+		if (newIncognitoTab != null/* && !mUseQuickControls*/) {
+			newIncognitoTab.setVisible(false);
+		}
+		MenuItem closeOthers = menu.findItem(R.id.close_other_tabs_id);
+		//if (closeOthers != null) {
+		//	boolean isLastTab = true;
+		//	if (tab != null) {
+		//		isLastTab = (mTabControl.getTabCount() <= 1);
+		//	}
+		//	closeOthers.setEnabled(!isLastTab);
+		//}
+		if (/*showingNavScreen()*/false) {
+			menu.setGroupVisible(R.id.LIVE_MENU, false);
+			menu.setGroupVisible(R.id.SNAPSHOT_MENU, false);
+			menu.setGroupVisible(R.id.NAV_MENU, false);
+			menu.setGroupVisible(R.id.COMBO_MENU, true);
+		}
+	}
+
+
 }

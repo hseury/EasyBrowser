@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import butterknife.Bind;
@@ -60,5 +63,21 @@ public class BrowserActivity extends Activity {
 	@Override public void onBackPressed() {
 		super.onBackPressed();
 		mController.onBackPressed();
+	}
+
+	//popmenu
+	@Override public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		return mController.onPrepareOptionsMenu(menu);
+	}
+
+	@Override public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenu.ContextMenuInfo menuInfo) {
+		mController.onCreateContextMenu(menu, v, menuInfo);
+	}
+
+	@Override public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		return mController.onCreateOptionsMenu(menu);
 	}
 }

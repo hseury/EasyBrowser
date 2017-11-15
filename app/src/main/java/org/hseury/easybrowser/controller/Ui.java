@@ -1,5 +1,6 @@
 package org.hseury.easybrowser.controller;
 
+import android.view.Menu;
 import org.hseury.easybrowser.tab.Tab;
 import org.hseury.easybrowser.webviewframe.IWebView;
 
@@ -29,4 +30,9 @@ public abstract class Ui {
 	public abstract void onProgressChanged(Tab tab);
 
 	public abstract void hideStopButton();
+
+	// popmenu
+	public abstract boolean onPrepareOptionsMenu(Menu menu);
+
+	public abstract void updateMenuState(Tab tab, Menu menu);
 }

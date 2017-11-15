@@ -1,10 +1,18 @@
 package org.hseury.easybrowser.controller;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
@@ -167,6 +175,95 @@ public class Controller implements UiController, ActivityController,WebViewContr
 
 	public Tab getTab() {
 		return mTab;
+	}
+
+	@Override public Activity getActivity() {
+		return mActivity;
+	}
+
+	@Override public boolean onOptionsItemSelected(MenuItem item) {
+		if (null == mTab.getWebView()) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = mActivity.getMenuInflater();
+		inflater.inflate(R.menu.browser, menu);
+		return true;
+	}
+
+	@Override public boolean onContextItemSelected(MenuItem item) {
+		return false;
+	}
+
+	@Override public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenu.ContextMenuInfo menuInfo) {
+
+	}
+
+	@Override public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.setGroupVisible(R.id.MAIN_MENU, true);
+		menu.setGroupEnabled(R.id.MAIN_MENU, true);
+		menu.setGroupEnabled(R.id.MAIN_SHORTCUT_MENU, true);
+		updateMenuState(mTab, menu);
+		return mUi.onPrepareOptionsMenu(menu);
+	}
+
+	public void updateMenuState(Tab tab, Menu menu) {
+		boolean canGoBack = false;
+		boolean canGoForward = false;
+		boolean isHome = false;
+		boolean isDesktopUa = false;
+		boolean isLive = false;
+		if (tab != null) {
+			canGoBack = tab.canGoBack();
+			canGoForward = tab.canGoForward();
+			//isHome = mSettings.getHomePage().equals(tab.getUrl());
+			//isDesktopUa = mSettings.hasDesktopUseragent(tab.getWebView());
+			//isLive = !tab.isSnapshot();
+		}
+		final MenuItem back = menu.findItem(R.id.back_menu_id);
+		back.setEnabled(canGoBack);
+
+		final MenuItem home = menu.findItem(R.id.homepage_menu_id);
+		home.setEnabled(!isHome);
+
+		final MenuItem forward = menu.findItem(R.id.forward_menu_id);
+		forward.setEnabled(canGoForward);
+
+		final MenuItem source = menu.findItem(mTab.isLoading() ? R.id.stop_menu_id
+				: R.id.reload_menu_id);
+		final MenuItem dest = menu.findItem(R.id.stop_reload_menu_id);
+		if (source != null && dest != null) {
+			dest.setTitle(source.getTitle());
+			dest.setIcon(source.getIcon());
+		}
+		menu.setGroupVisible(R.id.NAV_MENU, isLive);
+
+		// decide whether to show the share link option
+		PackageManager pm = mActivity.getPackageManager();
+		Intent send = new Intent(Intent.ACTION_SEND);
+		send.setType("text/plain");
+		ResolveInfo ri = pm.resolveActivity(send,
+				PackageManager.MATCH_DEFAULT_ONLY);
+		menu.findItem(R.id.share_page_menu_id).setVisible(ri != null);
+
+		//boolean isNavDump = mSettings.enableNavDump();
+		//final MenuItem nav = menu.findItem(R.id.dump_nav_menu_id);
+		//nav.setVisible(isNavDump);
+		//nav.setEnabled(isNavDump);
+
+		//boolean showDebugSettings = mSettings.isDebugEnabled();
+		final MenuItem uaSwitcher = menu.findItem(R.id.ua_desktop_menu_id);
+		uaSwitcher.setChecked(isDesktopUa);
+
+		menu.setGroupVisible(R.id.LIVE_MENU, isLive);
+		menu.setGroupVisible(R.id.SNAPSHOT_MENU, !isLive);
+		menu.setGroupVisible(R.id.COMBO_MENU, false);
+
+		mUi.updateMenuState(tab, menu);
 	}
 }
 

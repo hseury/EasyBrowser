@@ -1,5 +1,6 @@
 package org.hseury.easybrowser.views;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,12 +10,15 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 import org.hseury.easybrowser.R;
 import org.hseury.easybrowser.controller.BaseUi;
 import org.hseury.easybrowser.controller.Controller;
@@ -27,7 +31,8 @@ import org.hseury.easybrowser.utils.UrlUtil;
  */
 
 public class NavigationBarPhone extends LinearLayout
-		implements View.OnFocusChangeListener, View.OnClickListener, UrlInputView.UrlInputListener {
+		implements View.OnFocusChangeListener, View.OnClickListener, UrlInputView.UrlInputListener,
+		PopupMenu.OnMenuItemClickListener, PopupMenu.OnDismissListener {
 
 	protected UrlInputView mUrlInput;
 
@@ -84,9 +89,9 @@ public class NavigationBarPhone extends LinearLayout
 		//mClearButton.setOnClickListener(this);
 		mMagnify = (ImageView) findViewById(R.id.magnify);
 		mTabSwitcher = findViewById(R.id.tab_switcher);
-		//mTabSwitcher.setOnClickListener(this);
+		mTabSwitcher.setOnClickListener(this);
 		mMore = findViewById(R.id.more);
-		//mMore.setOnClickListener(this);
+		mMore.setOnClickListener(this);
 		mTitleContainer = findViewById(R.id.title_bg);
 		//setFocusState(false);
 		Resources res = getContext().getResources();
@@ -117,8 +122,32 @@ public class NavigationBarPhone extends LinearLayout
 			case R.id.stop:
 				mUiController.onStopOrReloadClick();
 				break;
+			case R.id.tab_switcher:
+				Toast.makeText(getContext(), "multi tabs need to do", Toast.LENGTH_LONG).show();
+				break;
+			case R.id.more:
+				showMenu(mMore);
+				break;
 			default:
 				break;
+		}
+	}
+
+	void showMenu(View anchor) {
+		Activity activity = mUiController.getActivity();
+		if (mPopupMenu == null) {
+			mPopupMenu = new PopupMenu(getContext(), anchor);
+			mPopupMenu.setOnMenuItemClickListener(this);
+			mPopupMenu.setOnDismissListener(this);
+			if (!activity.onCreateOptionsMenu(mPopupMenu.getMenu())) {
+				mPopupMenu = null;
+				return;
+			}
+		}
+		Menu menu = mPopupMenu.getMenu();
+		if (activity.onPrepareOptionsMenu(menu)) {
+			mOverflowMenuShowing = true;
+			mPopupMenu.show();
 		}
 	}
 
@@ -211,5 +240,21 @@ public class NavigationBarPhone extends LinearLayout
 
 	public UrlInputView getUrlInput() {
 		return mUrlInput;
+	}
+
+	/**************** pop menu implements *********************/
+	@Override public boolean onMenuItemClick(MenuItem item) {
+		return mUiController.onOptionsItemSelected(item);
+	}
+
+	@Override public void onDismiss(PopupMenu menu) {
+		if (menu == mPopupMenu) {
+			onMenuHidden();
+		}
+	}
+
+	private void onMenuHidden() {
+		mOverflowMenuShowing = false;
+		//mBaseUi.showTitleBarForDuration();
 	}
 }
