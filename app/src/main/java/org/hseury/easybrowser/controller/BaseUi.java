@@ -131,10 +131,10 @@ public class BaseUi extends Ui {
 		//	}
 		//	closeOthers.setEnabled(!isLastTab);
 		//}
-		if (/*showingNavScreen()*/false) {
+		if (/*showingNavScreen()*/true) {
 			menu.setGroupVisible(R.id.LIVE_MENU, false);
 			menu.setGroupVisible(R.id.SNAPSHOT_MENU, false);
-			menu.setGroupVisible(R.id.NAV_MENU, false);
+			menu.setGroupVisible(R.id.NAV_MENU, true);
 			menu.setGroupVisible(R.id.COMBO_MENU, true);
 		}
 	}

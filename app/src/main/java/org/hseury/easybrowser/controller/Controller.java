@@ -185,6 +185,26 @@ public class Controller implements UiController, ActivityController,WebViewContr
 		if (null == mTab.getWebView()) {
 			return false;
 		}
+		switch (item.getItemId()) {
+			case R.id.stop_reload_menu_id:
+				if (mTab.isLoading()) {
+					stopLoading();
+				} else {
+					mTab.reload();
+				}
+				break;
+
+			case R.id.back_menu_id:
+				mTab.goBack();
+				break;
+
+			case R.id.forward_menu_id:
+				mTab.goForward();
+				break;
+
+			default:
+				return false;
+		}
 		return true;
 	}
 
