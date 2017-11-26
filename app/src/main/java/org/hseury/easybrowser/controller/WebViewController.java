@@ -1,6 +1,7 @@
 package org.hseury.easybrowser.controller;
 
 import android.graphics.Bitmap;
+import android.webkit.WebView;
 import org.hseury.easybrowser.tab.Tab;
 import org.hseury.easybrowser.webviewframe.IWebView;
 
@@ -19,4 +20,6 @@ public interface WebViewController {
 	void onReceivedTitle(Tab tab, final String title);
 
 	void onSetWebView(Tab tab, IWebView webView);
+
+	void doUpdateVisitedHistory(Tab tab, boolean isReload);
 }

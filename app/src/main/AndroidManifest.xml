@@ -29,6 +29,15 @@
       </intent-filter>
     </activity>
     <activity android:name=".activities.BrowserActivity"/>
+    <provider android:name="org.hseury.easybrowser.model.BrowserProvider2"
+        android:authorities="org.hseury.easybrowser;easybrowser"
+        android:multiprocess="false"
+        android:exported="true"
+        android:readPermission="org.hseury.easybrowser.permission.READ_HISTORY_BOOKMARKS"
+        android:writePermission="org.hseury.easybrowser.permission.WRITE_HISTORY_BOOKMARKS">
+      <path-permission android:path="/bookmarks/search_suggest_query"
+          android:readPermission="android.permission.GLOBAL_SEARCH" />
+    </provider>
   </application>
 
 </manifest>

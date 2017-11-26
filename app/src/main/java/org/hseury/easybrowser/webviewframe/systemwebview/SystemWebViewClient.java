@@ -28,4 +28,8 @@ public class SystemWebViewClient extends WebViewClient {
   @Override public void onLoadResource(WebView view, String url) {
     mClient.onLoadResource(new SystemWebView(view), url);
   }
+
+  @Override public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
+    mClient.doUpdateVisitedHistory(new SystemWebView(view), url, isReload);
+  }
 }

@@ -28,4 +28,8 @@ public class X5WebViewClient extends WebViewClient {
   @Override public void onLoadResource(WebView view, String url) {
     mClient.onLoadResource(new X5WebView(view), url);
   }
+
+  @Override public void doUpdateVisitedHistory(WebView webView, String s, boolean b) {
+    mClient.doUpdateVisitedHistory(new X5WebView(webView), s, b);
+  }
 }

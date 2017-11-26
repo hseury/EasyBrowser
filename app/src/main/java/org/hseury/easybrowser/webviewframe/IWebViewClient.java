@@ -17,4 +17,7 @@ public abstract class IWebViewClient {
 
   public void onLoadResource(IWebView webView, String s) {
   }
+
+  public void doUpdateVisitedHistory(IWebView webView, String url, boolean isReload) {
+  }
 }

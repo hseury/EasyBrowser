@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.hseury.easybrowser.R;
+import org.hseury.easybrowser.model.DataController;
 import org.hseury.easybrowser.tab.Tab;
 import org.hseury.easybrowser.webviewframe.IWebView;
 
@@ -284,6 +285,11 @@ public class Controller implements UiController, ActivityController,WebViewContr
 		menu.setGroupVisible(R.id.COMBO_MENU, false);
 
 		mUi.updateMenuState(tab, menu);
+	}
+
+	/**************** url bar suggestion ********************/
+	@Override public void doUpdateVisitedHistory(Tab tab, boolean isReload) {
+		DataController.getInstance(mActivity).updateVisitedHistory(tab.getUrl());
 	}
 }
 

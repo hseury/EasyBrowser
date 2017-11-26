@@ -39,6 +39,4 @@
   <!-- Name of tab containing the user's saved pages, organized by time created [CHAR LIMIT=20] -->
   <string name="tab_snapshots">Saved pages</string>
   <!--pop menu end -->
-
-
 </resources>

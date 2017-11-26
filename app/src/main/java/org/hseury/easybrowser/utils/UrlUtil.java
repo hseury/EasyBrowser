@@ -70,4 +70,29 @@ public class UrlUtil {
 		}
 		return null;
 	}
+
+	// Regular expression to strip http:// and optionally
+	// the trailing slash
+	private static final Pattern STRIP_URL_PATTERN =
+			Pattern.compile("^http://(.*?)/?$");
+	/**
+	 * Strips the provided url of preceding "http://" and any trailing "/". Does not
+	 * strip "https://". If the provided string cannot be stripped, the original string
+	 * is returned.
+	 *
+	 * TODO: Put this in TextUtils to be used by other packages doing something similar.
+	 *
+	 * @param url a url to strip, like "http://www.google.com/"
+	 * @return a stripped url like "www.google.com", or the original string if it could
+	 *         not be stripped
+	 */
+	public static String stripUrl(String url) {
+		if (url == null) return null;
+		Matcher m = STRIP_URL_PATTERN.matcher(url);
+		if (m.matches()) {
+			return m.group(1);
+		} else {
+			return url;
+		}
+	}
 }

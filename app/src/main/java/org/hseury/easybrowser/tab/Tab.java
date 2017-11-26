@@ -90,6 +90,11 @@ public class Tab {
         mCallback.onLoadResource(webView,s);
       }
     }
+
+    @Override public void doUpdateVisitedHistory(IWebView webView, String url, boolean isReload) {
+      super.doUpdateVisitedHistory(webView, url, isReload);
+      mWebViewController.doUpdateVisitedHistory(Tab.this, isReload);
+    }
   };
 
   private IWebChromeClient mWebChromeClient = new IWebChromeClient() {
