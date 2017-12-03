@@ -223,7 +223,7 @@ public class MainActivity extends Activity {
 
   public void initUIAndSettings(){
     if(mWebView == null){
-      mWebView = new WebView(this);
+      mWebView = new BrowserWebView(this);
       class JavascriptInterface{
         public void getContentHeight(String value){
           if (value != null){
